@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="AI Engineer Portfolio" />
+    <title>포트폴리오 이용학</title>
+
+    <!-- Pretendard Font -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+    />
+
+    <style>
+      /* ========================================
+           CSS Variables - 미래에셋증권 컬러 스킴
+           ======================================== */
+      :root {
+        --primary-orange: #f37321;
+        --primary-orange-light: #ff8c42;
+        --primary-orange-dark: #d65a10;
+        --secondary-dark-blue: #002d56;
+        --text-dark: #333333;
+        --text-secondary: #666666;
+        --background-white: #ffffff;
+        --background-light: #f8f8f8;
+        --border-light: #e0e0e0;
+        --secondary-dark-blue-light: #004080;
+      }
+
+      /* ========================================
+           Reset CSS
+           ======================================== */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        font-size: 16px;
+        /* Phase 7: 본문 줄 간격 최적화 */
+        line-height: 1.65;
+      }
+
+      body {
+        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui,
+          Roboto, "Helvetica Neue", sans-serif;
+        color: var(--text-dark);
+        background-color: var(--background-white);
+        /* Phase 7: 본문 글자 간격 미세 조정 */
+        letter-spacing: 0.01em;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      ul,
+      ol {
+        list-style: none;
+      }
+
+      /* ========================================
+           Print Styles - A4 Landscape
+           ======================================== */
+      @page {
+        size: A4 landscape;
+        margin: 0;
+      }
+
+      @media print {
+        html,
+        body {
+          margin: 0;
+          padding: 0;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+          background: none;
+        }
+
+        /* Phase 8: 불필요한 요소 숨김 */
+        .no-print {
+          display: none !important;
+        }
+
+        .page {
+          margin: 0;
+          box-shadow: none;
+          page-break-after: always;
+          break-after: page;
+          page-break-inside: avoid;
+          break-inside: avoid;
+          /* Phase 8: 인쇄 시 정확한 페이지 크기 - 약간 여유를 둠 */
+          width: 297mm;
+          height: 209mm;
+          max-height: 209mm;
+          padding: 8mm;
+          box-sizing: border-box;
+          overflow: hidden;
+        }
+
+        /* Phase 8: 페이지 1 overflow 방지 */
+        .page-sidebar,
+        .page-main,
+        .page-grid {
+          max-height: 194mm; /* 210mm - 16mm padding */
+          overflow: hidden;
+        }
+
+        .page:last-child {
+          page-break-after: auto;
+          break-after: auto;
+        }
+
+        /* Phase 8: 링크 URL 표시 - 외부 링크만 */
+        a[href^="http"]::after,
+        a[href^="https"]::after {
+          content: " (" attr(href) ")";
+          font-size: 0.7em;
+          color: var(--text-secondary);
+          word-break: break-all;
+        }
+
+        /* Phase 8: 배경색 강제 출력 보장 */
+        .skill-tag,
+        .skill-tag.highlight,
+        .project-section,
+        .publication-abstract,
+        .image-placeholder,
+        .profile-image,
+        .project-header {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+      }
+
+      /* ========================================
+           Phase 2: Page Layout System
+           ======================================== */
+
+      /* Step 1: .page 클래스 정의 */
+      .page {
+        width: 297mm;
+        height: 210mm;
+        padding: 10mm;
+        background: var(--background-white);
+        position: relative;
+        overflow: hidden;
+        /* Step 4: 화면용 여백 */
+        margin: 20px auto;
+        /* Phase 7: 부드러운 다층 그림자 */
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 3px 8px rgba(0, 0, 0, 0.06),
+          0 8px 24px rgba(0, 0, 0, 0.06);
+      }
+
+      /* Step 2: page-break-after 적용 (print에서 처리) */
+
+      /* Step 3: 2-column 레이아웃 그리드 */
+      .page-grid {
+        display: grid;
+        /* Phase 7: 미세한 비대칭 레이아웃 */
+        grid-template-columns: 78mm 1fr;
+        gap: 14mm;
+        height: 100%;
+        align-items: start;
+      }
+
+      .page-sidebar {
+        /* 사이드바 영역 */
+      }
+
+      .page-main {
+        /* 메인 콘텐츠 영역 */
+      }
+
+      /* 프로젝트 페이지용 단일 컬럼 */
+      .page-single {
+        display: block;
+      }
+
+      /* Step 5: 섹션 간 간격 조정 */
+      /* Phase 7: 다양한 여백으로 자연스러움 */
+      .section {
+        margin-bottom: 7mm;
+      }
+
+      .section:nth-child(2) {
+        margin-bottom: 8mm;
+      }
+
+      .section:nth-child(3) {
+        margin-bottom: 6mm;
+      }
+
+      .section:last-child {
+        margin-bottom: 0;
+      }
+
+      .section-title {
+        /* Phase 7: 섹션 제목 타이포그래피 + 다크블루 포인트 */
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--secondary-dark-blue);
+        margin-bottom: 4mm;
+        padding-bottom: 2mm;
+        padding-left: 3mm;
+        border-bottom: 1px solid var(--border-light);
+        border-left: 3px solid var(--primary-orange);
+        letter-spacing: -0.01em;
+        line-height: 1.35;
+      }
+
+      /* ========================================
+           Phase 3: 커버 페이지 스타일
+           ======================================== */
+
+      /* 프로필 섹션 */
+      .profile {
+        text-align: center;
+        margin-top: 10mm;
+        margin-bottom: 25mm;
+      }
+
+      .profile-image {
+        width: 45mm;
+        height: 45mm;
+        /* Phase 7: 부드러운 그라데이션과 그림자 */
+        background: linear-gradient(145deg, #f8f8f8 0%, #eeeeee 100%);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 4px;
+        margin: 0 auto 10mm;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-secondary);
+        font-size: 0.75rem;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      }
+
+      .profile-name {
+        /* Phase 7: 제목 타이포그래피 최적화 + 다크블루 브랜드 */
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: var(--secondary-dark-blue);
+        margin-bottom: 2mm;
+        letter-spacing: -0.02em;
+        line-height: 1.3;
+      }
+
+      .profile-tagline {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        /* Phase 7: 소개 텍스트 줄 간격 */
+        line-height: 1.55;
+        letter-spacing: 0.005em;
+      }
+
+      /* 연락처 섹션 */
+      .contact-list {
+        font-size: 0.8rem;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 2mm;
+        color: var(--text-dark);
+      }
+
+      .contact-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .contact-label {
+        color: var(--text-secondary);
+        width: 18mm;
+        flex-shrink: 0;
+      }
+
+      .contact-value {
+        color: var(--text-dark);
+      }
+
+      .contact-value a {
+        /* Phase 7: 링크 오렌지 포인트 */
+        color: var(--primary-orange);
+        border-bottom: 1px dotted var(--primary-orange-light);
+      }
+
+      .contact-value a:hover {
+        text-decoration: none;
+        border-bottom-style: solid;
+      }
+
+      /* 학력 섹션 */
+      .education-item {
+        margin-bottom: 4mm;
+      }
+
+      .education-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .education-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 1mm;
+      }
+
+      .education-school {
+        /* Phase 7: 학교명 타이포그래피 */
+        font-size: 0.92rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        letter-spacing: -0.01em;
+      }
+
+      .education-period {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+      }
+
+      .education-major {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin-bottom: 1mm;
+      }
+
+      .education-detail {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        font-style: italic;
+      }
+
+      /* 기술 스택 섹션 */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2mm 8mm;
+      }
+
+      .skills-category {
+        margin-bottom: 2mm;
+      }
+
+      .skills-category:last-child {
+        margin-bottom: 0;
+      }
+
+      .skills-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        margin-bottom: 1.5mm;
+      }
+
+      .skills-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5mm;
+      }
+
+      .skill-tag {
+        display: inline-block;
+        padding: 1mm 2.5mm;
+        background-color: var(--background-light);
+        border: 1px solid var(--border-light);
+        /* Phase 7: 부드러운 모서리 */
+        border-radius: 5px;
+        font-size: 0.7rem;
+        color: var(--text-dark);
+        transition: all 0.15s ease;
+      }
+
+      .skill-tag.highlight {
+        /* Phase 7: 하이라이트 태그 오렌지 강조 */
+        background-color: var(--primary-orange);
+        border-color: var(--primary-orange);
+        color: white;
+        box-shadow: 0 1px 3px rgba(243, 115, 33, 0.25);
+      }
+
+      /* 사이드바용 컴팩트 기술 태그 */
+      .skills-compact {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5mm;
+      }
+
+      /* 프로젝트 목록 섹션 (1페이지용) */
+      .project-list-item {
+        margin-bottom: 3mm;
+        padding-bottom: 2mm;
+        border-bottom: 1px solid var(--border-light);
+      }
+
+      .project-list-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+
+      .project-list-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 1mm;
+      }
+
+      .project-list-title {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        padding-left: 2mm;
+        border-left: 2px solid var(--primary-orange);
+      }
+
+      .project-list-period {
+        font-size: 0.7rem;
+        color: var(--text-secondary);
+      }
+
+      .project-list-desc {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        line-height: 1.5;
+      }
+
+      /* ========================================
+           Phase 4: 프로젝트 카드 스타일
+           ======================================== */
+
+      /* 프로젝트 헤더 */
+      .project-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 3mm;
+        padding-bottom: 3mm;
+        /* Phase 7: 프로젝트 헤더 투톤 효과 (다크블루 + 오렌지) */
+        border-bottom: 2px solid var(--secondary-dark-blue);
+        border-left: 4px solid var(--primary-orange);
+        background: linear-gradient(
+          90deg,
+          rgba(0, 45, 86, 0.03) 0%,
+          transparent 100%
+        );
+        padding: 2mm 3mm 3mm 3mm;
+        margin-left: -3mm;
+        margin-right: -3mm;
+      }
+
+      .project-title {
+        /* Phase 7: 프로젝트 제목 타이포그래피 + 다크블루 */
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: var(--secondary-dark-blue);
+        letter-spacing: -0.02em;
+        line-height: 1.25;
+      }
+
+      .project-period {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+      }
+
+      /* 역할 정보 */
+      .project-role {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin-bottom: 5mm;
+        padding-left: 2mm;
+        border-left: 3px solid var(--primary-orange);
+      }
+
+      /* 콘텐츠 영역 (2x2 그리드) */
+      .project-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 4mm;
+      }
+
+      .project-section {
+        background-color: var(--background-light);
+        /* Phase 7: 미세한 그라데이션과 부드러운 모서리 */
+        background: linear-gradient(165deg, #fafafa 0%, #f5f5f5 100%);
+        padding: 4mm;
+        border-radius: 6px;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      }
+
+      .project-section-title {
+        /* Phase 7: 프로젝트 섹션 제목 다크블루 포인트 */
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--secondary-dark-blue);
+        margin-bottom: 2mm;
+        padding-bottom: 1.5mm;
+        padding-left: 2mm;
+        border-bottom: 1px solid var(--border-light);
+        border-left: 2px solid var(--primary-orange);
+      }
+
+      .project-section-body {
+        font-size: 0.75rem;
+        color: var(--text-dark);
+        /* Phase 7: 본문 줄 간격 최적화 */
+        line-height: 1.65;
+      }
+
+      .project-section-body ul {
+        padding-left: 4mm;
+      }
+
+      .project-section-body li {
+        margin-bottom: 1mm;
+        list-style: disc;
+      }
+
+      .project-section-body li::marker {
+        /* Phase 7: 리스트 불릿 오렌지 */
+        color: var(--primary-orange);
+      }
+
+      .project-section-body li:last-child {
+        margin-bottom: 0;
+      }
+
+      /* 정량적 지표 (결과 섹션용) */
+      .project-metrics {
+        display: flex;
+        flex-direction: column;
+        gap: 2mm;
+      }
+
+      .metric-item {
+        display: flex;
+        align-items: baseline;
+        gap: 2mm;
+      }
+
+      .metric-value {
+        /* Phase 7: 지표 값 오렌지 강조 */
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--primary-orange);
+        text-shadow: 0 0 0.5px var(--primary-orange);
+      }
+
+      .metric-label {
+        font-size: 0.7rem;
+        color: var(--text-secondary);
+      }
+
+      /* 기술 스택 태그 영역 */
+      .project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2mm;
+        margin-bottom: 5mm;
+      }
+
+      .project-tags .skill-tag {
+        font-size: 0.7rem;
+        padding: 1.5mm 3mm;
+      }
+
+      /* Category-grouped tech stack display */
+      .project-tech-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 2mm;
+        margin-bottom: 5mm;
+        align-items: flex-start;
+      }
+
+      .tech-category {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1.5mm;
+      }
+
+      .tech-category-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        min-width: 18mm;
+        flex-shrink: 0;
+      }
+
+      .tech-category-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5mm;
+      }
+
+      .tech-category-tags .skill-tag {
+        font-size: 0.7rem;
+        padding: 1.5mm 3mm;
+      }
+
+      /* Inline tech stack display */
+      .project-tech-inline {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin-bottom: 5mm;
+        padding-left: 2mm;
+        border-left: 3px solid var(--primary-orange);
+      }
+
+      /* 이미지 갤러리 */
+      .project-gallery {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4mm;
+      }
+
+      .image-placeholder {
+        /* Phase 7: 부드러운 그라데이션과 테두리 */
+        background: linear-gradient(145deg, #f9f9f9 0%, #f0f0f0 100%);
+        border: 1px dashed rgba(0, 0, 0, 0.12);
+        border-radius: 6px;
+        height: 65mm;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-secondary);
+        font-size: 0.7rem;
+        text-align: center;
+        padding: 2mm;
+      }
+
+      .image-placeholder img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+      }
+
+      /* 2개 이미지일 때 */
+      .project-gallery.two-images {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .project-gallery.two-images .image-placeholder {
+        height: 55mm;
+      }
+
+      /* ========================================
+           Phase 5: 경력 및 연구 페이지 스타일
+           ======================================== */
+
+      /* 2-column 레이아웃 (경력 | 논문) */
+      .page-two-column {
+        display: grid;
+        /* Phase 7: 미세한 비대칭 */
+        grid-template-columns: 1.02fr 0.98fr;
+        gap: 12mm;
+        height: 100%;
+      }
+
+      .page-column {
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* 경력/인턴 섹션 */
+      .experience-item {
+        margin-bottom: 5mm;
+        padding-bottom: 4mm;
+        border-bottom: 1px solid var(--border-light);
+      }
+
+      .experience-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+
+      .experience-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 2mm;
+      }
+
+      .experience-company {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--text-dark);
+      }
+
+      .experience-period {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+      }
+
+      .experience-position {
+        font-size: 0.85rem;
+        color: var(--secondary-dark-blue);
+        margin-bottom: 2mm;
+      }
+
+      .experience-tasks {
+        font-size: 0.75rem;
+        color: var(--text-dark);
+        padding-left: 4mm;
+      }
+
+      .experience-tasks li {
+        margin-bottom: 1mm;
+        list-style: disc;
+      }
+
+      .experience-tasks li::marker {
+        /* Phase 7: 리스트 불릿 오렌지 */
+        color: var(--primary-orange);
+      }
+
+      .experience-tasks li:last-child {
+        margin-bottom: 0;
+      }
+
+      .experience-achievement {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        font-style: italic;
+        margin-top: 2mm;
+        padding-left: 2mm;
+        border-left: 2px solid var(--primary-orange);
+      }
+
+      /* 논문/연구 섹션 */
+      .publication-item {
+        margin-bottom: 5mm;
+        padding-bottom: 4mm;
+        border-bottom: 1px solid var(--border-light);
+      }
+
+      .publication-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+
+      .publication-title {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 1.5mm;
+        line-height: 1.4;
+      }
+
+      .publication-venue {
+        font-size: 0.75rem;
+        color: var(--secondary-dark-blue);
+        margin-bottom: 1mm;
+      }
+
+      .publication-authors {
+        font-size: 0.7rem;
+        color: var(--text-secondary);
+        margin-bottom: 2mm;
+      }
+
+      .publication-authors .highlight {
+        font-weight: 600;
+        color: var(--text-dark);
+      }
+
+      .publication-abstract {
+        font-size: 0.7rem;
+        color: var(--text-dark);
+        /* Phase 7: 초록 줄 간격 최적화 */
+        line-height: 1.55;
+        background-color: var(--background-light);
+        padding: 2mm 3mm;
+        border-radius: 4px;
+      }
+
+      /* ========================================
+           Phase 6: 수상 / 추가 정보 페이지 스타일
+           ======================================== */
+
+      /* 수상 항목 */
+      .award-item {
+        margin-bottom: 5mm;
+        padding-bottom: 4mm;
+        border-bottom: 1px solid var(--border-light);
+      }
+
+      .award-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+
+      .award-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 2mm;
+      }
+
+      .award-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--primary-orange);
+      }
+
+      .award-date {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+      }
+
+      .award-organizer {
+        font-size: 0.85rem;
+        color: var(--secondary-dark-blue);
+        margin-bottom: 2mm;
+      }
+
+      .award-description {
+        font-size: 0.75rem;
+        color: var(--text-dark);
+        /* Phase 7: 설명 줄 간격 최적화 */
+        line-height: 1.55;
+      }
+
+      /* 추가 정보 항목 (자격증, 언어, 기타 활동) */
+      .additional-item {
+        margin-bottom: 4mm;
+        padding-bottom: 3mm;
+        border-bottom: 1px solid var(--border-light);
+      }
+
+      .additional-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+
+      .additional-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 1mm;
+      }
+
+      .additional-name {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-dark);
+      }
+
+      .additional-date {
+        font-size: 0.7rem;
+        color: var(--text-secondary);
+      }
+
+      .additional-detail {
+        font-size: 0.75rem;
+        color: var(--secondary-dark-blue);
+      }
+
+      .additional-description {
+        font-size: 0.7rem;
+        color: var(--text-secondary);
+        margin-top: 1mm;
+      }
+
+      /* 국가 R&D 컴팩트 스타일 */
+      .rnd-item {
+        margin-bottom: 3mm;
+        padding-bottom: 2mm;
+        border-bottom: 1px solid var(--border-light);
+      }
+
+      .rnd-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+
+      .rnd-period {
+        font-size: 0.7rem;
+        color: var(--text-secondary);
+        margin-bottom: 1mm;
+        white-space: nowrap;
+      }
+
+      .rnd-title {
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--text-dark);
+        line-height: 1.4;
+      }
+
+      /* 특허 섹션 스타일 */
+      .patent-item {
+        margin-bottom: 5mm;
+        padding-bottom: 4mm;
+        border-bottom: 1px solid var(--border-light);
+      }
+
+      .patent-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+
+      .patent-title {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 1mm;
+        line-height: 1.4;
+      }
+
+      .patent-title-en {
+        font-size: 0.7rem;
+        color: var(--text-secondary);
+        margin-bottom: 2mm;
+        font-style: italic;
+      }
+
+      .patent-info {
+        font-size: 0.7rem;
+        color: var(--text-dark);
+        margin-bottom: 1mm;
+      }
+
+      .patent-info-label {
+        color: var(--text-secondary);
+        margin-right: 2mm;
+      }
+
+      .patent-inventors {
+        font-size: 0.7rem;
+        color: var(--text-secondary);
+        margin-top: 2mm;
+      }
+
+      .patent-inventors .highlight {
+        font-weight: 600;
+        color: var(--primary-orange);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Page 1: 커버 페이지 (프로필 + 학력 + 기술 스택) -->
+    <div class="page">
+      <div class="page-grid">
+        <aside class="page-sidebar">
+          <!-- 프로필 섹션 -->
+          <div class="section profile">
+            <div class="profile-image">
+              <img src="images/yonghaklee.jpg" alt="Profile Photo" />
+            </div>
+            <h1 class="profile-name">이용학</h1>
+            <p class="profile-tagline">
+              다양한 데이터 분석 및 AI 기술 개발 경험을 쌓았습니다.
+            </p>
+          </div>
+          <!-- 연락처 섹션 -->
+          <div class="section">
+            <h2 class="section-title">연락처</h2>
+            <div class="contact-list">
+              <div class="contact-item">
+                <span class="contact-label">Email</span>
+                <span class="contact-value">feint225@gmail.com</span>
+              </div>
+              <div class="contact-item">
+                <span class="contact-label">Phone</span>
+                <span class="contact-value">010-8295-3294</span>
+              </div>
+              <div class="contact-item">
+                <span class="contact-label">GitHub</span>
+                <span class="contact-value"
+                  ><a href="https://github.com/yonghaklee" target="_blank"
+                    >github.com/yonghaklee</a
+                  ></span
+                >
+              </div>
+              
+            </div>
+          </div>
+        </aside>
+
+        <main class="page-main">
+          <!-- 학력 섹션 -->
+          <div class="section">
+            <h2 class="section-title">학력</h2>
+
+            <div class="education-item">
+              <div class="education-header">
+                <span class="education-school">건국대학교 일반대학원</span>
+                <span class="education-period">2022.03 - 2026.08 (예정)</span>
+              </div>
+              <div class="education-major">응용통계학과 박사</div>
+              <div class="education-detail">
+                논문: "모바일 LiDAR와 딥러닝 기반의 키포인트 탐지를 이용한 다중
+                스케일 객체 3차원 계측 및 속성 추정 프레임워크" (예정)
+              </div>
+            </div>
+
+            <div class="education-item">
+              <div class="education-header">
+                <span class="education-school">건국대학교 일반대학원</span>
+                <span class="education-period">2020.03 - 2022.02</span>
+              </div>
+              <div class="education-major">응용통계학과 석사</div>
+              <div class="education-detail">
+                논문: "상품 추천을 위한 시각 이미지와 메타데이터 통합 분석
+                방법론"
+              </div>
+            </div>
+
+            <div class="education-item">
+              <div class="education-header">
+                <span class="education-school">건국대학교</span>
+                <span class="education-period">2010.03 - 2020.02</span>
+              </div>
+              <div class="education-major">응용통계학과 학사</div>
+            </div>
+          </div>
+
+          <!-- 프로젝트 섹션 -->
+          <div class="section">
+            <h2 class="section-title">프로젝트</h2>
+            <div class="project-list">
+              <div class="project-list-item">
+                <div class="project-list-header">
+                  <span class="project-list-title"
+                    >분할영상자료를 통한 미세먼지 측정 솔루션 개발</span
+                  >
+                  <span class="project-list-period">2020.01 - 2021.01</span>
+                </div>
+              </div>
+
+              <div class="project-list-item">
+                <div class="project-list-header">
+                  <span class="project-list-title"
+                    >상품 추천을 위한 시각 이미지와 메타데이터 통합 분석 방법론
+                    개발</span
+                  >
+                  <span class="project-list-period">2021.01 - 2022.01</span>
+                </div>
+              </div>
+
+              <div class="project-list-item">
+                <div class="project-list-header">
+                  <span class="project-list-title"
+                    >로봇 센서 데이터 분석을 통한 가스배관 변화구간 및 길이 탐지
+                    솔루션 개발</span
+                  >
+                  <span class="project-list-period">2022.01 - 2023.01</span>
+                </div>
+              </div>
+
+              <div class="project-list-item">
+                <div class="project-list-header">
+                  <span class="project-list-title"
+                    >모바일 라이다 센서를 통한 치수 측정 솔루션 개발</span
+                  >
+                  <span class="project-list-period">2023.01 - 현재</span>
+                </div>
+              </div>
+
+              <div class="project-list-item">
+                <div class="project-list-header">
+                  <span class="project-list-title"
+                    >S&P500 ETF 가이드 웹앱 페이지 개발
+                  </span>
+                  <span class="project-list-period">2025.11 - 현재</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Page 2: 프로젝트 1 - 분할영상자료를 통한 미세먼지 측정 솔루션 개발 -->
+    <div class="page page-single">
+      <!-- 프로젝트 헤더 -->
+      <div class="project-header">
+        <h2 class="project-title">
+          분할영상자료를 통한 미세먼지 측정 솔루션 개발
+        </h2>
+        <span class="project-period">2020.01 - 2021.01</span>
+      </div>
+
+      <!-- 역할 -->
+      <div class="project-role">
+        데이터 수집 및 전처리 | 모델 학습 및 평가 | 모델 고도화
+      </div>
+
+      <!-- 기술 스택 -->
+      <div class="project-tech-inline">Raspberry Pi | Python | OpenCV</div>
+
+      <!-- 2x2 그리드 콘텐츠 -->
+      <div class="project-content">
+        <div class="project-section">
+          <h3 class="project-section-title">문제 상황</h3>
+          <div class="project-section-body">
+            <ul>
+              <li>
+                <strong>고비용 및 관측 사각지대</strong>: 국가 측정망(TEOM 등)은
+                정확하나 설치·유지비가 비싸고, 공간 제약으로 관측 사각지대가
+                발생함
+              </li>
+              <li>
+                <strong>보급형 센서의 유지관리 한계</strong>: 저가형 광산란
+                센서는 넓은 범위를 커버하기 위해 많은 유지관리 비용이 들고
+                신뢰성 확보가 어려움
+              </li>
+              <li>
+                <strong>기존 영상 기술의 낮은 예측력</strong>: 단일 이미지만
+                분석하여 시공간적 정보를 활용하지 못하고 움직임 등에 취약함
+              </li>
+              <li>
+                <strong>낮은 연산 효율성</strong>: 심층 신경망 모델은 파라미터가
+                너무 많아 연산 비용이 높고 비효율적임
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="project-section">
+          <h3 class="project-section-title">해결 방법 및 성과</h3>
+          <div class="project-section-body">
+            <ul>
+              <li>
+                <strong>시계열 딥러닝 모델 적용</strong>: 연속된 영상
+                프레임(Temporal Prior)을 활용해 미세먼지의 흐름과 변동성을
+                포착하는 모델 개발
+              </li>
+              <li>
+                <strong>차분 연산 및 통계 분석</strong>: 프레임 간 광도 변화를
+                수치화하고 이동평균, PLS-DA 등의 통계량으로 농도를 예측
+              </li>
+              <li>
+                <strong>저비용 실시간 시스템 구축</strong>: 라즈베리 파이를
+                활용해 비용을 낮추고, 15초 이내 분석 가능한 실시간 솔루션 구현
+              </li>
+              <li>
+                <strong>높은 정확도 달성</strong>: 실내 약 86%, 실외 약 82%의
+                정확도와 오차 범위 25% 이내의 성능 확보
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="image-placeholder">
+          <img src="images/project01_01.png" />
+        </div>
+
+        <div class="image-placeholder">
+          <img src="images/project01_02.png" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 3: 프로젝트 2 - 상품 추천을 위한 시각 이미지와 메타데이터 통합 분석 방법론 개발 -->
+    <div class="page page-single">
+      <!-- 프로젝트 헤더 -->
+      <div class="project-header">
+        <h2 class="project-title">
+          상품 추천을 위한 시각 이미지와 메타데이터 통합 분석 방법론 개발
+        </h2>
+        <span class="project-period">2021.01 - 2022.01</span>
+      </div>
+
+      <!-- 역할 -->
+      <div class="project-role">
+        데이터 수집 및 전처리 | 모델 학습 및 평가 | 모델 고도화 | 논문 작성
+      </div>
+
+      <!-- 기술 스택 -->
+      <div class="project-tech-inline">
+        Python | PyTorch | MobileNetV3 | Sentence-BERT | Amazon Fashion
+        Meta-data
+      </div>
+
+      <!-- 2x2 그리드 콘텐츠 -->
+      <div class="project-content">
+        <div class="project-section">
+          <h3 class="project-section-title">문제 상황</h3>
+          <div class="project-section-body">
+            <ul>
+              <li>
+                <strong>단일 데이터의 한계</strong>: 이미지나 텍스트 중 하나만
+                사용 시 예측 정확도 확보가 어려움
+              </li>
+              <li>
+                <strong>모바일 환경 연산 제약</strong>: 기존 심층 CNN 모델은
+                모바일 기기에서 구동하기에 연산 부담이 큼
+              </li>
+              <li>
+                <strong>다국어 처리 문제</strong>: 영어와 한국어가 혼합된
+                메타데이터에서 효과적인 특징 추출이 필요함
+              </li>
+              <li>
+                <strong>선호도 파악 난해</strong>: 단순 필터링으로는 고객의
+                숨겨진 선호 패턴을 분석하기 어려움
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="project-section">
+          <h3 class="project-section-title">해결 방법 및 성과</h3>
+          <div class="project-section-body">
+            <ul>
+              <li>
+                <strong>통합 분석 모델 구축</strong>: 이미지와 텍스트 특징을
+                결합(Concatenate)하여 상품 관계 예측 모델 개발
+              </li>
+              <li>
+                <strong>효율적 이미지 처리</strong>: MobileNetV3를 활용해 적은
+                연산량으로 이미지 특징 추출
+              </li>
+              <li>
+                <strong>다국어 처리 성능 입증</strong>: 한/영 혼합 데이터에서도
+                언어별 모델 분리 시 80% 이상의 정확도 확보
+              </li>
+              <li>
+                <strong>추천 시스템 가능성 확인</strong>: 상품 간 관계 학습을
+                통해 사용자 맞춤형 추천 시스템 구현 가능성 확인
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="image-placeholder">
+          <img src="images/project02_01.png" />
+        </div>
+        <div class="image-placeholder">
+          <img src="images/project02_02.png" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 4: 프로젝트 3 - 로봇 센서 데이터 분석을 통한 가스배관 변화구간 및 길이 탐지 솔루션 개발 -->
+    <div class="page page-single">
+      <!-- 프로젝트 헤더 -->
+      <div class="project-header">
+        <h2 class="project-title">
+          로봇 센서 데이터 분석을 통한 가스배관 변화구간 및 길이 탐지 솔루션
+          개발
+        </h2>
+        <span class="project-period">2022.01 - 2023.01</span>
+      </div>
+
+      <!-- 역할 -->
+      <div class="project-role">
+        데이터 전처리 | 파생변수 생성 | 모델 학습 및 평가 | 모델 고도화 | 패키징
+      </div>
+
+      <!-- 기술 스택 -->
+      <div class="project-tech-inline">
+        Python | Random Forest | LightGBM | YOLO | Sensor Data
+      </div>
+
+      <!-- 2x2 그리드 콘텐츠 -->
+      <div class="project-content">
+        <div class="project-section">
+          <h3 class="project-section-title">문제 상황</h3>
+          <div class="project-section-body">
+            <ul>
+              <li>
+                <strong>자동화 시스템</strong>: 센서 데이터만으로 WELD(접합부),
+                BEND(만곡부) 구간 탐지 자동화에 한계
+              </li>
+              <li>
+                <strong>MLP 성능 한계</strong>: 입력 크기 고정 제약으로 인해
+                정확도가 0.18~0.34로 저조함
+              </li>
+              <li>
+                <strong>이상 구간(Anomaly) 모호성</strong>: 비정상 구간과 유사한
+                패턴이 많아 오탐 발생
+              </li>
+              <li>
+                <strong>데이터 불균형</strong>: 특징 구간보다 일반 구간이
+                압도적으로 많아 학습 어려움
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="project-section">
+          <h3 class="project-section-title">해결 방법 및 성과</h3>
+          <div class="project-section-body">
+            <ul>
+              <li>
+                <strong>트리 기반 모델 및 파생 변수 도입</strong>: 성능이 낮은
+                MLP 대신 Random Forest 등 트리 모델로 전환하고, Raw 데이터 대신
+                분산(Variance), 최대-최소 차이(Max-Min), 행 간 차이 등 7~14개의
+                파생 변수를 생성하여 학습에 활용함
+              </li>
+              <li>
+                <strong>예측 정확도 향상</strong>: 파생 변수를 적용한 Random
+                Forest 모델을 통해 접합부 예측 정확도를 약 0.87까지
+                끌어올렸으며, 연속된 예측 결과를 후처리하여 구간을 보정함
+              </li>
+              <li>
+                <strong>만곡부 높은 예측 성능 달성</strong>: 접합부와 접합부
+                사이 구간을 만곡부 후보로 정의하고 LGBM 모델을 적용한 결과
+                0.98의 매우 높은 정확도를 달성함
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="image-placeholder">
+          <img src="images/project03_01.png" />
+        </div>
+        <div class="image-placeholder">
+          <img src="images/project03_02.png" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 5: 프로젝트 4 - 모바일 라이다 센서를 통한 치수 측정 솔루션 개발 -->
+    <div class="page page-single">
+      <!-- 프로젝트 헤더 -->
+      <div class="project-header">
+        <h2 class="project-title">
+          모바일 LiDAR와 딥러닝 기반의 키포인트 탐지를 이용한 다중 스케일 객체
+          3차원 계측 및 속성 추정 프레임워크
+        </h2>
+        <span class="project-period">2023.01 - 현재</span>
+      </div>
+
+      <!-- 역할 -->
+      <div class="project-role">
+        데이터 수집 및 전처리 | 모델 학습 및 평가 | 모델 고도화 | 논문 작성
+      </div>
+
+      <!-- 기술 스택 -->
+      <div class="project-tech-inline">
+        Mobile LiDAR | 3D Point Cloud | Python | PyTorch | HRNet | YOLO
+      </div>
+
+      <!-- 2x2 그리드 콘텐츠 -->
+      <div class="project-content">
+        <div class="project-section">
+          <h3 class="project-section-title">문제 상황</h3>
+          <div class="project-section-body">
+            <ul>
+              <li>
+                <strong>2D 비전 한계</strong>: 단순 이미지는 거리 정보가 없어
+                실제 크기 측정 시 별도 참조물이 필요함
+              </li>
+              <li>
+                <strong>환경 통제 제약</strong>: 기존 방식은 카메라 거리, 조명,
+                배경 등을 엄격히 통제해야 해 실용성이 낮음
+              </li>
+              <li>
+                <strong>수동 측정 비효율</strong>: 줄자나 저울을 이용한 수동
+                측정은 시간이 오래 걸리고 인적 오차가 발생함
+              </li>
+              <li>
+                <strong>기존 3D 모델 한계</strong>: 고성능 장비가 필요하거나
+                연산이 느려 모바일 실시간 적용이 어려움
+              </li>
+              <li>
+                <strong>객체 형태 복잡성</strong>: 의류 주름, 딸기 모양, 다양한
+                인체 포즈 등을 단순 알고리즘으로 측정하기 난해함
+              </li>
+              <li>
+                <strong>깊이 정보 불일치</strong>: 2D 이미지의 키포인트가 실제
+                3D 공간의 경계와 일치하지 않아 오차 발생
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="project-section">
+          <h3 class="project-section-title">해결 방법 및 성과</h3>
+          <div class="project-section-body">
+            <ul>
+              <li>
+                <strong>2D-3D 좌표 매핑</strong>: 딥러닝 키포인트와 LiDAR 거리
+                정보를 결합해 참조물 없이 정밀 측정 구현
+              </li>
+              <li>
+                <strong>키포인트 보정 기술</strong>: 깊이 맵의 경계선(Edge)을
+                활용해 키포인트를 실제 객체 외곽으로 보정, 정밀도 향상
+              </li>
+              <li>
+                <strong>높은 측정 정확도</strong>: 의류(오차 ~2%), 딸기(오차
+                ~4-5%), 신체(주요 부위 오차 <4%) 모두 높은 정확도 달성
+              </li>
+              <li>
+                <strong>속성 예측 모델</strong>: 길이 데이터를 기반으로 딸기
+                무게(오차 ~10%) 및 신체 둘레를 정밀하게 추정하는 회귀식 개발
+              </li>
+              <li>
+                <strong>환경 강건성 확보</strong>: 배경, 조명, 객체 회전이나
+                구겨짐 등 다양한 환경 변수에도 일관된 성능 입증
+              </li>
+              <li>
+                <strong>모바일 실시간 처리</strong>: 복잡한 3D 복원 없이 빠른
+                연산으로 모바일 기기에서 실시간 측정 구현
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="image-placeholder">
+          <img src="images/project04_01.png" />
+        </div>
+        <div class="image-placeholder">
+          <img src="images/project04_02.png" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 6: 프로젝트 5 - S&P500 ETF 가이드 웹앱 페이지 개발 -->
+    <div class="page page-single">
+      <!-- 프로젝트 헤더 -->
+      <div
+        class="project-header"
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <div>
+          <h2 class="project-title">S&P500 ETF 가이드 웹앱 페이지 개발</h2>
+          <span class="project-period">2025.11 - 현재</span>
+        </div>
+        <img
+          src="images/project05_qr.png"
+          alt="QR Code"
+          style="height: 20mm; width: auto"
+        />
+      </div>
+
+      <!-- 역할 -->
+      <div class="project-role">
+        단독 풀스택 개발
+        <a
+          href="https://yonghaklee.github.io/snp500-etf/"
+          style="color: var(--primary-orange-dark)"
+        >
+          <strong>(페이지 바로가기)</strong>
+        </a>
+      </div>
+
+      <!-- 기술 스택 -->
+      <div class="project-tech-inline">
+        Next.js | TypeScript | Tailwind CSS | Finance Data | Redis | Docker |
+        Python
+      </div>
+
+      <!-- 2x2 그리드 콘텐츠 -->
+      <div class="project-content">
+        <div class="project-section">
+          <h3 class="project-section-title">동기와 목표</h3>
+          <div class="project-section-body">
+            <ul>
+              <li>주식 초보자 입장에서 쉽게 입문할 수 있는 주식 소개</li>
+              <li>가장 대표적인 S&P500 ETF를 소개하고자 함</li>
+              <li>투자를 일종의 도박으로 생각하는 '투자장벽'을 깨고자 함</li>
+              <li>
+                자연스럽게 장기투자를 유도하고, ISA, IRP를 활용한 절세 전략을
+                추천하고자 함
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="project-section">
+          <h3 class="project-section-title">구현</h3>
+          <div class="project-section-body">
+            <ul>
+              <li>Next.js 기반의 현대적 프론트엔드 설계 및 구현</li>
+              <li>
+                최신 데이터 업데이트를 위한 Python 기반의 FastAPI 백엔드 구현
+              </li>
+              <li>Redis를 활용한 캐싱 구현</li>
+              <li>GitHub 페이지에 배포하기 위한 Cloudflare Tunnel 연결</li>
+              <li>Deploy to GitHub Pages</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="image-placeholder">
+          <img src="images/project05_01.png" />
+        </div>
+        <div class="image-placeholder">
+          <img src="images/project05_02.png" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 7: 경력/인턴 + 논문/연구 -->
+    <div class="page">
+      <div class="page-two-column">
+        <!-- 좌측: 경력/인턴 섹션 -->
+        <div class="page-column">
+          <div class="section">
+            <h2 class="section-title">경력 / 인턴</h2>
+
+            <!-- 경력 1: 주식회사 머스트리 -->
+            <div class="experience-item">
+              <div class="experience-header">
+                <span class="experience-company">주식회사 머스트리</span>
+                <span class="experience-period">2023.03.02 - 현재</span>
+              </div>
+              <div class="experience-position">기술개발팀 연구원</div>
+              <ul class="experience-tasks">
+                <li>데이터 수집 및 정제</li>
+                <li>3D Point Cloud 기반 치수 측정 알고리즘 연구</li>
+                <li>AI 모델 연구 개발 / 자동화 및 API 구현</li>
+                <li>국가 R&D 과제 제안 및 수행</li>
+                <li>특허 관리</li>
+              </ul>
+            </div>
+
+            <!-- 경력 2: 주식회사 온더마스 -->
+            <div class="experience-item">
+              <div class="experience-header">
+                <span class="experience-company">주식회사 온더마스</span>
+                <span class="experience-period">2021.09 - 2022.04</span>
+              </div>
+              <div class="experience-position">기술개발팀 연구원</div>
+              <ul class="experience-tasks">
+                <li>크롤링 기반 데이터 수집 자동화 및 정제</li>
+                <li>AI 모델 연구 개발</li>
+              </ul>
+            </div>
+
+            <!-- 경력 3: 주식회사 딥비전스 -->
+            <div class="experience-item">
+              <div class="experience-header">
+                <span class="experience-company">주식회사 딥비전스</span>
+                <span class="experience-period">2020.01 - 2021.06</span>
+              </div>
+              <div class="experience-position">기술개발팀 연구원</div>
+              <ul class="experience-tasks">
+                <li>데이터 수집 및 정제</li>
+                <li>라즈베리파이 기반 미세먼지 측정 시스템 개발</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 우측: 논문/연구 [1], [2], [3] -->
+        <div class="page-column">
+          <div class="section">
+            <h2 class="section-title">논문 / 연구</h2>
+
+            <!-- 논문 [1] -->
+            <div class="publication-item">
+              <div class="publication-title">A Two- Stage Diffusion Pipeline for Consistent Front-Back Clothing Generation</div>
+              <div class="publication-venue">Quantitative Bio-Science (2025), *Corresponding Author</div>
+              <div class="publication-authors">Hwang M.,†, Jeong Y., Kim S., Noh T., Jeong S., Jeong H. and <strong>Lee Y.*</strong></div>
+              <div class="publication-abstract">생성형 AI인 확산 모델(Diffusion Model)을 2단계로 적용하여, 의상의 앞면과 뒷면 디자인이 서로 일관성을 유지하도록 생성하는 기술을 제안한 연구입니다.</div>
+            </div>
+
+            <!-- 논문 [2] -->
+            <div class="publication-item">
+              <div class="publication-title">SoulBound Token Recovery Mechanism and the Application of a Customer-Centric Gaurdian System</div>
+              <div class="publication-venue">Journal of the Korea Institute of Information Security & Cryptology (2025)</div>
+              <div class="publication-authors">Kim J., <strong>Lee Y.</strong>, Yang S., Kim N. and Kim S</div>
+              <div class="publication-abstract">양도 불가능한 토큰인 SBT(SoulBound Token)의 분실 시 복구를 위해, 사용자 친화적인 '가디언 시스템'을 도입하여 보안성과 편의성을 높인 메커니즘에 관한 연구입니다.</div>
+            </div>
+
+            <!-- 논문 [3] -->
+            <div class="publication-item">
+              <div class="publication-title">A Mobile LiDAR-Based Deep Learning Approach for Real-Time 3D Body Measurement</div>
+              <div class="publication-venue">Applied Sciences (2025)</div>
+              <div class="publication-authors">Jeong Y., Noh T., <strong>Lee Y.</strong>, Lee S., Choi K., Jeong S. and Kim S.</div>
+              <div class="publication-abstract">모바일 기기에 내장된 라이다(LiDAR) 센서와 딥러닝 기술을 결합하여, 실시간으로 인체의 3D 치수를 정밀하게 측정하는 방법론입니다.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 8: 논문/연구 [4]~[9] -->
+    <div class="page">
+      <div class="page-two-column">
+        <!-- 좌측: 논문/연구 [4], [5], [6] -->
+        <div class="page-column">
+          <div class="section">
+            <h2 class="section-title">논문 / 연구</h2>
+
+            <!-- 논문 [4] -->
+            <div class="publication-item">
+              <div class="publication-title">Implementation of SoulBound Token Using Economical and Efficient Decentralized File Storage Methods</div>
+              <div class="publication-venue">Journal of the Korea Institute of Information Security & Cryptology (2024)</div>
+              <div class="publication-authors">Kim J., <strong>Lee Y.</strong>, Yang S. and Kim S.</div>
+              <div class="publication-abstract">블록체인 온체인 데이터 저장 비용 문제를 해결하기 위해, 탈중앙화 파일 저장 방식(IPFS 등)을 활용하여 SBT 시스템을 경제적으로 구현하는 방법을 제시했습니다.</div>
+            </div>
+
+            <!-- 논문 [5] -->
+            <div class="publication-item">
+              <div class="publication-title">Automated Technology for Strawberry Size Measurement and Weight Prediction Using AI</div>
+              <div class="publication-venue">IEEE Access (2024)</div>
+              <div class="publication-authors">Jeong H., Moon H., Jeong Y., Kwon H., Kim C., <strong>Lee Y.</strong>, Yang S. and Kim S.</div>
+              <div class="publication-abstract">컴퓨터 비전 기술로 딸기 영상을 분석해 크기를 자동 측정하고 무게를 예측함으로써, 농산물 분류 및 스마트팜 자동화에 기여하는 기술입니다.</div>
+            </div>
+
+            <!-- 논문 [6] -->
+            <div class="publication-item">
+              <div class="publication-title">A Multi-View Integrated Ensemble for the Background Discrimination of Semi-Supervised Semantic Segmentation</div>
+              <div class="publication-venue">Applied Sciences (2023)</div>
+              <div class="publication-authors">Gwak H., Jeong Y., Kim C., <strong>Lee Y.</strong>, Yang S. and Kim S.</div>
+              <div class="publication-abstract">준지도 학습 기반의 영상 분할(Semantic Segmentation) 성능을 높이기 위해, 다양한 시점의 정보를 결합한 앙상블 기법으로 객체와 배경의 구분 정확도를 향상시킨 연구입니다.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 우측: 논문/연구 [7], [8], [9] -->
+        <div class="page-column">
+          <div class="section">
+            <h2 class="section-title">논문 / 연구</h2>
+
+            <!-- 논문 [7] -->
+            <div class="publication-item">
+              <div class="publication-title">Dental Image Data Generation for Instance Segmentation using Generative Adversarial Networks</div>
+              <div class="publication-venue">Quantitative Bio-Science (2023)</div>
+              <div class="publication-authors">Heo S., Jung S., Kwak H., Jeong Y., Yang S., <strong>Lee Y.</strong>, and Kim S.</div>
+              <div class="publication-abstract">데이터 확보가 어려운 치과 의료 영상 분야에서 GAN(생성적 적대 신경망)을 이용해 학습 데이터를 생성(증강)하고, 이를 통해 인스턴스 분할 모델의 성능을 높인 연구입니다.</div>
+            </div>
+
+            <!-- 논문 [8] -->
+            <div class="publication-item">
+              <div class="publication-title">An Investment Model Based on a Head-And-Shoulder Pattern with Multiple Moving Average Technical Indicators for Future Markets</div>
+              <div class="publication-venue">Quantitative Bio-Science (2022)</div>
+              <div class="publication-authors">Oh J., Lingan P., <strong>Lee Y.</strong>, Yang S. and Kim S.</div>
+              <div class="publication-abstract">선물 시장 투자를 위해 전통적인 차트 패턴인 '헤드앤숄더'와 다양한 이동평균선 지표를 결합하여 매매 시점을 포착하는 알고리즘 모델입니다.</div>
+            </div>
+
+            <!-- 논문 [9] -->
+            <div class="publication-item">
+              <div class="publication-title">Integrated Analytic Methodology Using Visual Image and Meta-Data for Product Recommendation</div>
+              <div class="publication-venue">Quantitative Bio-Science (2022)</div>
+              <div class="publication-authors"><strong>Lee Y.</strong>, Oh J., Yang S. and Kim S.</div>
+              <div class="publication-abstract">제품의 시각적 이미지 정보와 텍스트 기반의 메타데이터를 통합적으로 분석하여 추천 시스템의 정확도와 사용자 만족도를 높이는 방법론입니다.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 9: 논문/연구 [10]~[12] + 국가 R&D + 자격증 -->
+    <div class="page">
+      <div class="page-two-column">
+        <!-- 좌측: 논문/연구 [10], [11], [12] -->
+        <div class="page-column">
+          <div class="section">
+            <h2 class="section-title">논문 / 연구</h2>
+
+            <!-- 논문 [10] -->
+            <div class="publication-item">
+              <div class="publication-title">Automatic Measurements of Garment Sizes Using Computer Vision Deep Learning Models and Point Cloud Data</div>
+              <div class="publication-venue">Applied Sciences (2022)</div>
+              <div class="publication-authors">Kim S., Moon H., Oh J., <strong>Lee Y.</strong>, Kwon H. and Kim S.</div>
+              <div class="publication-abstract">3D 포인트 클라우드 데이터와 딥러닝 비전 모델을 활용하여, 사람의 개입 없이 의류의 각 부위 치수를 자동으로 측정하는 시스템에 관한 연구입니다.</div>
+            </div>
+
+            <!-- 논문 [11] -->
+            <div class="publication-item">
+              <div class="publication-title">Reinforcement Learning Guided by Double Replay Memory</div>
+              <div class="publication-venue">Journal of Sensors (2020)</div>
+              <div class="publication-authors">Han J., Jo K., Lim W., <strong>Lee Y.</strong>, Ko K., Sim E., Cho J. and Kim S.</div>
+              <div class="publication-abstract">강화학습 에이전트가 과거 경험을 학습하는 과정에서 '이중 재생 메모리(Double Replay Memory)' 구조를 도입하여 학습 효율성과 안정성을 개선한 연구입니다.</div>
+            </div>
+
+            <!-- 논문 [12] -->
+            <div class="publication-item">
+              <div class="publication-title">Estimation of Particulate Levels Using Deep Dehazing Network and Temporal Prior</div>
+              <div class="publication-venue">Journal of Sensors (2020)</div>
+              <div class="publication-authors">Jung S., Yang S., Lee E., <strong>Lee Y.</strong>, Ko J., Lee S., Cho J., Lee J. and Kim S.</div>
+              <div class="publication-abstract">영상의 안개를 제거하는 딥러닝 네트워크(Dehazing)와 시간적 변화 정보를 활용하여, 대기 중 미세먼지 등 입자 농도를 추정하는 기술입니다.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 우측: 국가 R&D (1~4) -->
+        <div class="page-column">
+          <div class="section">
+            <h2 class="section-title">국가 R&D</h2>
+
+            <div class="rnd-item">
+              <div class="rnd-period">2025-05 - 2025-12</div>
+              <div class="rnd-title">K-뷰티의 초개인 맞춤화 및 고객 유치 경쟁력 강화를 위한 모바일 피부분석 AI 솔루션 개발</div>
+            </div>
+
+            <div class="rnd-item">
+              <div class="rnd-period">2024-11 - 2025-10</div>
+              <div class="rnd-title">소아 청소년 대상 성장 및 건강 솔루션을 제공하는 모바일 헬스케어 앱 개발을 위한 비만 판정 및 자세 교정</div>
+            </div>
+
+            <div class="rnd-item">
+              <div class="rnd-period">2024-10 - 2025-09</div>
+              <div class="rnd-title">소상공인의 업소용 기자재 중고 거래 활성화를 위한 '기자재 사이즈 및 무게 측정 솔루션' 고도화</div>
+            </div>
+
+            <div class="rnd-item">
+              <div class="rnd-period">2023-09 - 2024-07</div>
+              <div class="rnd-title">온라인 중고 거래 활성화를 위한 옷 치수 자동 측정 솔루션 고도화</div>
+            </div>
+
+            <div class="rnd-item">
+              <div class="rnd-period">2023-03 - 2024-02</div>
+              <div class="rnd-title">적대적 샘플 공격에 대한 인공지능의 취약점 분석과 대응방안 연구</div>
+            </div>
+
+            <div class="rnd-item">
+              <div class="rnd-period">2021-09 - 2024-02</div>
+              <div class="rnd-title">3차원 자료를 활용한 영상인식 및 코로나 방역로봇을 위한 자율주행 연구</div>
+            </div>
+
+            <div class="rnd-item">
+              <div class="rnd-period">2020-12 - 2021-11</div>
+              <div class="rnd-title">인공지능 기반의 비대면 비전 솔루션을 활용한 쓰레기 배출 감시 시스템 개발</div>
+            </div>
+
+            <div class="rnd-item">
+              <div class="rnd-period">2019-12 - 2021-01</div>
+              <div class="rnd-title">딥러닝 기술과 이미지 프로세싱 기술을 활용한 미세먼지 측정기술 개발</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 10: 특허 -->
+    <div class="page">
+      <div class="page-two-column">
+        <!-- 좌측: 특허 -->
+        <div class="page-column">
+          <div class="section">
+            <h2 class="section-title">특허</h2>
+
+            <div class="patent-item">
+              <div class="patent-title">2D 및 3D 데이터 융합 기반의 신체 둘레 측정 방법 및 장치</div>
+              <div class="patent-title-en">METHOD AND DEVICE FOR BODY CIRCUMFERENCE MEASUREMENT BASED ON 2D AND 3D DATA FUSION</div>
+              <div class="patent-info">
+                <span class="patent-info-label">출원</span>10-2024-0099646 (2024.07.26)
+              </div>
+              <div class="patent-info">
+                <span class="patent-info-label">등록</span>10-2821984-0000 (2025.06.13)
+              </div>
+              <div class="patent-inventors">발명자: 김성환, <strong>이용학</strong>, 김장환</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 우측: 자격증 -->
+        <div class="page-column">
+          <div class="section">
+            <h2 class="section-title">자격증</h2>
+
+            <div class="additional-item">
+              <div class="additional-header">
+                <span class="additional-name">SQLD</span>
+                <span class="additional-date">2025.12</span>
+              </div>
+              <div class="additional-detail">한국데이터산업진흥원</div>
+            </div>
+
+            <div class="additional-item">
+              <div class="additional-header">
+                <span class="additional-name">ADsP</span>
+                <span class="additional-date">2025.11</span>
+              </div>
+              <div class="additional-detail">한국데이터산업진흥원</div>
+            </div>
+
+            <div class="additional-item">
+              <div class="additional-header">
+                <span class="additional-name">한국사능력검정시험 1급</span>
+                <span class="additional-date">2019.08</span>
+              </div>
+              <div class="additional-detail">국사편찬위원회</div>
+            </div>
+
+            <div class="additional-item">
+              <div class="additional-header">
+                <span class="additional-name">컴퓨터활용능력 1급</span>
+                <span class="additional-date">2015.08</span>
+              </div>
+              <div class="additional-detail">대한상공회의소</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
