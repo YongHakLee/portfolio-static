@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="ko" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="전공소개서 - 이용학" />
+    <title>전공소개서</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Pretendard Font -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+    />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                "Pretendard",
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "system-ui",
+                "Roboto",
+                "sans-serif",
+              ],
+            },
+            colors: {
+              border: "hsl(214.3 31.8% 91.4%)",
+              input: "hsl(214.3 31.8% 91.4%)",
+              ring: "hsl(221.2 83.2% 53.3%)",
+              background: "hsl(0 0% 100%)",
+              foreground: "hsl(222.2 84% 4.9%)",
+              primary: {
+                DEFAULT: "hsl(221.2 83.2% 53.3%)",
+                foreground: "hsl(210 40% 98%)",
+              },
+              secondary: {
+                DEFAULT: "hsl(210 40% 96.1%)",
+                foreground: "hsl(222.2 47.4% 11.2%)",
+              },
+              muted: {
+                DEFAULT: "hsl(210 40% 96.1%)",
+                foreground: "hsl(215.4 16.3% 46.9%)",
+              },
+              accent: {
+                DEFAULT: "hsl(210 40% 96.1%)",
+                foreground: "hsl(222.2 47.4% 11.2%)",
+              },
+              card: {
+                DEFAULT: "hsl(0 0% 100%)",
+                foreground: "hsl(222.2 84% 4.9%)",
+              },
+            },
+            borderRadius: {
+              lg: "0.5rem",
+              md: "calc(0.5rem - 2px)",
+              sm: "calc(0.5rem - 4px)",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style type="text/tailwindcss">
+      @layer base {
+        * {
+          @apply border-border;
+        }
+        body {
+          @apply bg-background text-foreground;
+        }
+      }
+
+      @layer components {
+        .card {
+          @apply rounded-lg border bg-card text-card-foreground shadow-sm;
+        }
+        .badge {
+          @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors;
+        }
+        .badge-primary {
+          @apply border-transparent bg-primary text-primary-foreground hover:bg-primary/80;
+        }
+        .badge-secondary {
+          @apply border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80;
+        }
+        .badge-outline {
+          @apply text-foreground border-primary/30;
+        }
+      }
+
+      /* Print Styles */
+      @media print {
+        @page {
+          size: A4 portrait;
+          margin: 0;
+        }
+        html,
+        body {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .page {
+          box-shadow: none !important;
+          page-break-after: always;
+          break-after: page;
+        }
+        .page:last-child {
+          page-break-after: auto;
+        }
+        .no-print {
+          display: none !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="min-h-screen bg-slate-50/50 antialiased">
+    <!-- Page 1 -->
+    <div
+      class="page w-[210mm] min-h-[297mm] mx-auto my-5 bg-white shadow-lg print:shadow-none print:my-0"
+    >
+      <div class="p-10">
+        <!-- Header -->
+        <header class="text-center mb-10 pb-6 border-b relative">
+          <div
+            class="absolute left-1/2 -translate-x-1/2 -bottom-[2px] w-20 h-1 bg-gradient-to-r from-blue-500 to-sky-400 rounded-full"
+          ></div>
+          <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-2">
+            전공소개서
+          </h1>
+          <p class="text-muted-foreground text-sm">Major Introduction</p>
+        </header>
+
+        <!-- 연구 분야 개요 -->
+        <section class="mb-8">
+          <div class="flex items-center gap-2 mb-4">
+            <div
+              class="w-1 h-6 bg-gradient-to-b from-blue-600 to-blue-400 rounded-full"
+            ></div>
+            <h2 class="text-lg font-semibold text-slate-900">연구 분야 개요</h2>
+          </div>
+          <div class="space-y-3 text-sm text-slate-600 leading-relaxed pl-3">
+            <p>
+              저의 연구는
+              <span class="font-semibold text-blue-700"
+                >LiDAR 센서와 딥러닝 기술의 융합</span
+              >을 중심으로 합니다. LiDAR(Light Detection and Ranging)는 레이저를
+              이용해 물체의 3차원 형상과 거리 정보를 정밀하게 측정할 수 있는
+              센서로, 기존 2D 카메라의 한계를 극복하고 정확한 공간 인식을
+              가능하게 합니다.
+            </p>
+            <p>
+              LiDAR 센서에서 획득한
+              <span class="font-semibold text-blue-700"
+                >3D 포인트 클라우드 데이터</span
+              >를 딥러닝 모델과 결합하여
+              <span class="font-semibold text-blue-700">신체 측정</span>,
+              <span class="font-semibold text-blue-700">의류 치수 측정</span>,
+              <span class="font-semibold text-blue-700"
+                >얼굴 인식 및 위변조 탐지</span
+              >
+              등 다양한 실세계 문제를 해결하는 연구를 수행해 왔습니다.
+            </p>
+          </div>
+        </section>
+
+        <!-- 세부 연구 영역 -->
+        <section class="mb-8">
+          <div class="flex items-center gap-2 mb-4">
+            <div
+              class="w-1 h-6 bg-gradient-to-b from-blue-600 to-blue-400 rounded-full"
+            ></div>
+            <h2 class="text-lg font-semibold text-slate-900">세부 연구 영역</h2>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <!-- Card 1 -->
+            <div
+              class="card p-4 hover:shadow-md transition-shadow hover:border-blue-200 group"
+            >
+              <div class="flex items-center gap-2 mb-2">
+                <div
+                  class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center group-hover:bg-blue-500 transition-colors"
+                >
+                  <i
+                    data-lucide="scan"
+                    class="w-4 h-4 text-blue-600 group-hover:text-white transition-colors"
+                  ></i>
+                </div>
+                <h3 class="font-semibold text-slate-800 text-sm">
+                  3D 신체/의류 측정
+                </h3>
+              </div>
+              <p class="text-xs text-muted-foreground leading-relaxed">
+                모바일 LiDAR 센서를 활용한 실시간 3D 신체 치수 측정 및 의류 크기
+                자동 추정 기술
+              </p>
+            </div>
+            <!-- Card 2 -->
+            <div
+              class="card p-4 hover:shadow-md transition-shadow hover:border-blue-200 group"
+            >
+              <div class="flex items-center gap-2 mb-2">
+                <div
+                  class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center group-hover:bg-blue-500 transition-colors"
+                >
+                  <i
+                    data-lucide="scan-face"
+                    class="w-4 h-4 text-blue-600 group-hover:text-white transition-colors"
+                  ></i>
+                </div>
+                <h3 class="font-semibold text-slate-800 text-sm">
+                  얼굴 인식 시스템
+                </h3>
+              </div>
+              <p class="text-xs text-muted-foreground leading-relaxed">
+                LiDAR 기반 경량화 얼굴 인식 모델과 조명 변화에 강인한 안티스푸핑
+                기술
+              </p>
+            </div>
+            <!-- Card 3 -->
+            <div
+              class="card p-4 hover:shadow-md transition-shadow hover:border-blue-200 group"
+            >
+              <div class="flex items-center gap-2 mb-2">
+                <div
+                  class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center group-hover:bg-blue-500 transition-colors"
+                >
+                  <i
+                    data-lucide="boxes"
+                    class="w-4 h-4 text-blue-600 group-hover:text-white transition-colors"
+                  ></i>
+                </div>
+                <h3 class="font-semibold text-slate-800 text-sm">
+                  포인트 클라우드 처리
+                </h3>
+              </div>
+              <p class="text-xs text-muted-foreground leading-relaxed">
+                3D 포인트 클라우드 데이터의 효율적 처리 및 특징 추출 딥러닝
+                아키텍처
+              </p>
+            </div>
+            <!-- Card 4 -->
+            <div
+              class="card p-4 hover:shadow-md transition-shadow hover:border-blue-200 group"
+            >
+              <div class="flex items-center gap-2 mb-2">
+                <div
+                  class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center group-hover:bg-blue-500 transition-colors"
+                >
+                  <i
+                    data-lucide="cherry"
+                    class="w-4 h-4 text-blue-600 group-hover:text-white transition-colors"
+                  ></i>
+                </div>
+                <h3 class="font-semibold text-slate-800 text-sm">농업 AI</h3>
+              </div>
+              <p class="text-xs text-muted-foreground leading-relaxed">
+                컴퓨터 비전을 활용한 농산물(딸기) 크기 측정 및 무게 예측 자동화
+                시스템
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 연구 핵심 방향 -->
+        <div class="card p-5 border-blue-200">
+          <div class="flex items-center gap-2 mb-3">
+            <i data-lucide="lightbulb" class="w-5 h-5 text-blue-600"></i>
+            <h3 class="font-semibold text-slate-900">연구의 핵심 방향</h3>
+          </div>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            LiDAR 센서의 정밀한 3D 정보와 딥러닝의 학습 능력을 결합하여, 기존 2D
+            이미지 기반 시스템의 한계를 극복하고 실세계에서 신뢰할 수 있는 AI
+            시스템을 구현하는 것이 저의 핵심 연구 목표입니다.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 2 -->
+    <div
+      class="page w-[210mm] min-h-[297mm] mx-auto my-5 bg-white shadow-lg print:shadow-none print:my-0 relative"
+    >
+      <div class="p-10">
+        <!-- Header -->
+        <header class="text-center mb-8 pb-6 border-b relative">
+          <div
+            class="absolute left-1/2 -translate-x-1/2 -bottom-[2px] w-20 h-1 bg-gradient-to-r from-blue-500 to-sky-400 rounded-full"
+          ></div>
+          <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-2">
+            연구 상세
+          </h1>
+          <p class="text-muted-foreground text-sm">Research Details</p>
+        </header>
+
+        <!-- 3D 신체/의류 측정 -->
+        <section class="mb-6">
+          <div class="flex items-center gap-2 mb-3">
+            <div
+              class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center"
+            >
+              <i data-lucide="scan" class="w-4 h-4 text-blue-600"></i>
+            </div>
+            <h2 class="text-base font-semibold text-slate-900">
+              3D 신체/의류 측정
+            </h2>
+          </div>
+          <div class="pl-10 space-y-2">
+            <div class="card p-3">
+              <h3 class="font-medium text-sm text-slate-800 mb-1">
+                Real-Time 3D Body Measurement
+              </h3>
+              <ul class="text-xs text-muted-foreground space-y-1">
+                <li>
+                  • iPhone TrueDepth LiDAR 센서를 활용한
+                  <span class="text-blue-600 font-medium"
+                    >실시간 인체 3D 포인트 클라우드 획득</span
+                  >
+                </li>
+                <li>
+                  • PointNet++ 기반 딥러닝 모델로 가슴둘레, 허리둘레, 어깨너비
+                  등
+                  <span class="text-blue-600 font-medium"
+                    >10개 이상 신체 치수 자동 추출</span
+                  >
+                </li>
+                <li>
+                  • 모바일 환경에서
+                  <span class="text-blue-600 font-medium">1초 이내 추론</span>
+                  가능한 경량화 아키텍처 설계
+                </li>
+              </ul>
+            </div>
+            <div class="card p-3">
+              <h3 class="font-medium text-sm text-slate-800 mb-1">
+                Automatic Garment Size Measurement
+              </h3>
+              <ul class="text-xs text-muted-foreground space-y-1">
+                <li>
+                  • 의류 포인트 클라우드 데이터에서
+                  <span class="text-blue-600 font-medium"
+                    >키포인트 자동 검출</span
+                  >
+                  및 치수 계산
+                </li>
+                <li>
+                  • 비전 딥러닝(2D)과 3D 포인트 클라우드의
+                  <span class="text-blue-600 font-medium">멀티모달 융합</span>
+                  접근법
+                </li>
+                <li>
+                  • 온라인 쇼핑, 패션 리테일 산업의
+                  <span class="text-blue-600 font-medium"
+                    >사이즈 추천 시스템</span
+                  >에 적용 가능
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- 얼굴 인식 시스템 -->
+        <section class="mb-6">
+          <div class="flex items-center gap-2 mb-3">
+            <div
+              class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center"
+            >
+              <i data-lucide="scan-face" class="w-4 h-4 text-blue-600"></i>
+            </div>
+            <h2 class="text-base font-semibold text-slate-900">
+              얼굴 인식 시스템
+            </h2>
+          </div>
+          <div class="pl-10 space-y-2">
+            <div class="card p-3">
+              <h3 class="font-medium text-sm text-slate-800 mb-1">
+                SqueezeFace: LiDAR 기반 경량 얼굴 인식
+              </h3>
+              <ul class="text-xs text-muted-foreground space-y-1">
+                <li>
+                  • LiDAR 깊이 맵과 RGB 이미지의
+                  <span class="text-blue-600 font-medium"
+                    >듀얼 스트림 특징 융합</span
+                  >
+                </li>
+                <li>
+                  • SqueezeNet 기반
+                  <span class="text-blue-600 font-medium">경량화 백본</span>으로
+                  모바일/엣지 디바이스 배포 가능
+                </li>
+                <li>
+                  • 3D 얼굴 형상 정보 활용으로
+                  <span class="text-blue-600 font-medium"
+                    >조명, 포즈 변화에 강인한 인식</span
+                  >
+                  성능
+                </li>
+              </ul>
+            </div>
+            <div class="card p-3">
+              <h3 class="font-medium text-sm text-slate-800 mb-1">
+                CloudNet: 조명 강인 안티스푸핑
+              </h3>
+              <ul class="text-xs text-muted-foreground space-y-1">
+                <li>
+                  • LiDAR 포인트 클라우드 기반
+                  <span class="text-blue-600 font-medium"
+                    >위변조 탐지 (사진, 영상, 마스크 공격 방어)</span
+                  >
+                </li>
+                <li>
+                  • 3D 깊이 정보로
+                  <span class="text-blue-600 font-medium"
+                    >2D 프린트/디스플레이 공격</span
+                  >을 원천 차단
+                </li>
+                <li>
+                  • 극단적 조명 조건(역광, 저조도)에서도
+                  <span class="text-blue-600 font-medium"
+                    >99%+ 탐지 정확도</span
+                  >
+                  유지
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- 포인트 클라우드 처리 -->
+        <section class="mb-6">
+          <div class="flex items-center gap-2 mb-3">
+            <div
+              class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center"
+            >
+              <i data-lucide="boxes" class="w-4 h-4 text-blue-600"></i>
+            </div>
+            <h2 class="text-base font-semibold text-slate-900">
+              포인트 클라우드 처리
+            </h2>
+          </div>
+          <div class="pl-10">
+            <div class="card p-3">
+              <ul class="text-xs text-muted-foreground space-y-1">
+                <li>
+                  •
+                  <span class="text-blue-600 font-medium"
+                    >PointNet/PointNet++ 아키텍처</span
+                  >를 활용한 3D 포인트 클라우드 직접 처리
+                </li>
+                <li>
+                  • 노이즈 제거, 다운샘플링, 정규화 등
+                  <span class="text-blue-600 font-medium"
+                    >전처리 파이프라인</span
+                  >
+                  설계
+                </li>
+                <li>
+                  • 순서 불변(permutation invariant) 특성을 활용한
+                  <span class="text-blue-600 font-medium"
+                    >global/local 특징 추출</span
+                  >
+                </li>
+                <li>
+                  • 세그멘테이션, 분류, 회귀 등
+                  <span class="text-blue-600 font-medium"
+                    >다양한 다운스트림 태스크</span
+                  >에 적용
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- 농업 AI -->
+        <section>
+          <div class="flex items-center gap-2 mb-3">
+            <div
+              class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center"
+            >
+              <i data-lucide="cherry" class="w-4 h-4 text-blue-600"></i>
+            </div>
+            <h2 class="text-base font-semibold text-slate-900">농업 AI</h2>
+          </div>
+          <div class="pl-10">
+            <div class="card p-3">
+              <h3 class="font-medium text-sm text-slate-800 mb-1">
+                Strawberry Size & Weight Prediction
+              </h3>
+              <ul class="text-xs text-muted-foreground space-y-1">
+                <li>
+                  • 컴퓨터 비전 기반 딸기
+                  <span class="text-blue-600 font-medium"
+                    >외형 크기(가로, 세로) 자동 측정</span
+                  >
+                </li>
+                <li>
+                  • 측정된 크기 정보로부터
+                  <span class="text-blue-600 font-medium"
+                    >무게 예측 회귀 모델</span
+                  >
+                  학습
+                </li>
+                <li>
+                  • 스마트팜 자동 선별 시스템,
+                  <span class="text-blue-600 font-medium"
+                    >농산물 품질 등급 분류</span
+                  >에 활용
+                </li>
+                <li>
+                  • LiDAR 연구의 산업적 확장으로
+                  <span class="text-blue-600 font-medium"
+                    >농업 분야 AI 응용</span
+                  >
+                  가능성 검증
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
+</html>
