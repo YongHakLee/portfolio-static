@@ -125,7 +125,13 @@ D-1) 학습 플랜, 논문↔프로젝트↔기초개념 상호 참조표.
 - 05: GAN 원리와 학습 불안정성, pix2pix/CycleGAN, 확산모델(DDPM) 개념과 수식,
   조건부 생성(ControlNet/LoRA), 생성 품질 평가지표(FID/LPIPS 등)
 - 06: MDP·Q-learning·DQN·Experience Replay(PER 포함), 시계열 기초와 기술적 지표
-  (이동평균, 헤드앤숄더 패턴), 블록체인·NFT·SoulBound Token·IPFS/분산 스토리지
+  (이동평균, 헤드앤숄더 패턴), 블록체인·NFT·SoulBound Token·IPFS/분산 스토리지,
+  LLM 기초(트랜스포머·프롬프팅·Chain-of-Thought·instruction tuning)
+
+  LLM 절을 넣는 이유: 교신저자 논문 T5가 Llama3-Instruct에 CoT와 instruction
+  tuning을 결합해 텍스트를 생성한 뒤 확산모델에 넘기는 구조다. 경력기술서의 보유
+  기술에는 LLM 항목이 없으므로, 교신저자 논문을 근거로 한 LLM 질문에 대비가
+  필요하다.
 
 **02_projects/** — 프로젝트 문서. 논문 템플릿의 3~7번을 STAR(상황–과제–행동–결과)
 로 바꾸고 다음을 추가한다: 왜 그 기술을 골랐나 / 검토했던 대안 / 실패한 시도와
