@@ -1,0 +1,1419 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="이용학 포트폴리오 — 국가 R&D 과제 8건의 계보와 기획·수행 실무"
+    />
+    <title>포트폴리오 이용학</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ===== Reset ===== */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --ink: #16181c;
+        --ink-soft: #55585f;
+        --ink-faint: #8a8e97;
+        --rule: #d6d8dc;
+        --rule-soft: #ecedef;
+        --accent: #8a1538;
+        --accent-soft: #f5e9ec;
+        --accent-wash: #f8eff2;
+        --desk: #efefee;
+      }
+
+      html {
+        font-size: 15px;
+      }
+
+      body {
+        font-family:
+          "Pretendard",
+          -apple-system,
+          BlinkMacSystemFont,
+          system-ui,
+          "Segoe UI",
+          Roboto,
+          "Helvetica Neue",
+          sans-serif;
+        color: var(--ink);
+        line-height: 1.6;
+        letter-spacing: -0.005em;
+        background: var(--desk);
+      }
+
+      ul {
+        list-style: none;
+      }
+
+      img {
+        max-width: 100%;
+      }
+
+      /* ===== Mono utility face ===== */
+      .mono,
+      .doc-type,
+      .proj-when,
+      .axis-year,
+      .bar-when,
+      .rail-cell,
+      .proj-tech {
+        font-family:
+          "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* ===== Sheet ===== */
+      .sheet {
+        max-width: 210mm;
+        margin: 24px auto;
+        padding: 18mm 17mm;
+        background: #fff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      }
+
+      /* ===== Header ===== */
+      .head {
+        padding-bottom: 5mm;
+        border-bottom: 2px solid var(--ink);
+      }
+
+      .doc-type {
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        color: var(--accent);
+        margin-bottom: 2mm;
+      }
+
+      .name {
+        font-size: 1.9rem;
+        font-weight: 700;
+        letter-spacing: -0.035em;
+        line-height: 1.15;
+        margin-bottom: 1.5mm;
+      }
+
+      .title-line {
+        font-size: 0.87rem;
+        color: var(--ink-soft);
+        margin-bottom: 3.5mm;
+      }
+
+      .contact {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5mm 6mm;
+        font-size: 0.83rem;
+        color: var(--ink-soft);
+      }
+
+      /* ===== Lead ===== */
+      .lead {
+        margin-top: 5mm;
+        font-size: 0.87rem;
+        line-height: 1.68;
+        color: var(--ink-soft);
+        padding-left: 4mm;
+        border-left: 2px solid var(--accent-soft);
+      }
+
+      .lead strong {
+        font-weight: 600;
+        color: var(--ink);
+      }
+
+      /* ===== Section ===== */
+      .section {
+        margin-top: 7mm;
+      }
+
+      .section-title {
+        display: flex;
+        align-items: center;
+        gap: 2.2mm;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.09em;
+        padding-bottom: 1.3mm;
+        margin-bottom: 3mm;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .section-title::before {
+        content: "";
+        width: 0.9mm;
+        height: 3.2mm;
+        background: var(--accent);
+        flex-shrink: 0;
+      }
+
+      .section-note {
+        margin-left: auto;
+        font-size: 0.72rem;
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        color: var(--ink-faint);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .section-intro {
+        font-size: 0.84rem;
+        color: var(--ink-soft);
+        line-height: 1.64;
+        margin-bottom: 3mm;
+      }
+
+      /* ========================================
+         GANTT — 국가 R&D 과제 계보
+         ======================================== */
+      .gantt-scroll {
+        overflow-x: auto;
+        padding-bottom: 1mm;
+      }
+
+      .gantt {
+        display: grid;
+        grid-template-columns: 56mm repeat(15, 1fr);
+        grid-template-rows: auto repeat(8, auto) 3mm auto auto;
+        min-width: 165mm;
+        align-items: center;
+      }
+
+      /* the band sits behind everything else */
+      .gantt-band {
+        grid-column: 10 / 17;
+        grid-row: 1 / -1;
+        align-self: stretch;
+        background: var(--accent-wash);
+      }
+
+      .col-guide {
+        grid-row: 1 / -1;
+        align-self: stretch;
+        border-left: 1px solid var(--rule-soft);
+      }
+
+      .col-guide.mark {
+        border-left: 1px solid var(--accent-soft);
+      }
+
+      .gantt > *:not(.gantt-band):not(.col-guide) {
+        position: relative;
+        z-index: 1;
+      }
+
+      .axis-year {
+        grid-row: 1;
+        font-size: 0.66rem;
+        color: var(--ink-faint);
+        text-align: center;
+        padding-bottom: 1.2mm;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .axis-pad {
+        grid-column: 1;
+        grid-row: 1;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .bar-label {
+        grid-column: 1;
+        padding: 1.1mm 4mm 1.1mm 0;
+        border-bottom: 1px solid var(--rule-soft);
+        align-self: stretch;
+      }
+
+      .bar-name {
+        font-size: 0.72rem;
+        font-weight: 600;
+        line-height: 1.35;
+        letter-spacing: -0.02em;
+      }
+
+      .bar-when {
+        font-size: 0.62rem;
+        color: var(--ink-faint);
+        line-height: 1.5;
+      }
+
+      .bar-track {
+        grid-column: 2 / 17;
+        border-bottom: 1px solid var(--rule-soft);
+        align-self: stretch;
+      }
+
+      .bar {
+        height: 2.6mm;
+        background: var(--ink);
+        align-self: center;
+      }
+
+      .bar.axis3d {
+        background: var(--accent);
+      }
+
+      /* bottom rails */
+      .rail-label {
+        grid-column: 1;
+        font-size: 0.68rem;
+        font-weight: 600;
+        color: var(--ink-soft);
+        padding: 0.8mm 4mm 0.8mm 0;
+        text-align: right;
+      }
+
+      .rail-cell {
+        font-size: 0.66rem;
+        text-align: center;
+        color: var(--accent);
+        font-weight: 600;
+        padding: 0.8mm 0;
+      }
+
+      .rail-cell.paper {
+        color: var(--ink);
+      }
+
+      .rail-rule {
+        grid-column: 1 / 17;
+        grid-row: 10;
+        align-self: end;
+        border-top: 1px solid var(--rule);
+      }
+
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5mm 6mm;
+        margin-top: 3mm;
+        font-size: 0.72rem;
+        color: var(--ink-faint);
+      }
+
+      .legend span {
+        display: flex;
+        align-items: center;
+        gap: 1.5mm;
+      }
+
+      .swatch {
+        width: 5mm;
+        height: 2.2mm;
+        flex-shrink: 0;
+      }
+
+      .swatch.ink {
+        background: var(--ink);
+      }
+
+      .swatch.acc {
+        background: var(--accent);
+      }
+
+      .swatch.band {
+        background: var(--accent-wash);
+        border: 1px solid var(--accent-soft);
+        height: 3.2mm;
+      }
+
+      /* ===== Rows ===== */
+      .row {
+        display: grid;
+        grid-template-columns: 34mm 1fr;
+        gap: 0 5mm;
+        padding: 1.6mm 0;
+      }
+
+      .row + .row {
+        border-top: 1px solid var(--rule-soft);
+      }
+
+      .when {
+        font-size: 0.74rem;
+        color: var(--ink-faint);
+        line-height: 1.62;
+        padding-top: 0.5mm;
+      }
+
+      .what {
+        min-width: 0;
+        font-size: 0.83rem;
+        color: var(--ink-soft);
+        line-height: 1.58;
+      }
+
+      .what-title {
+        font-size: 0.87rem;
+        font-weight: 600;
+        line-height: 1.48;
+        color: var(--ink);
+      }
+
+      .what-note {
+        font-size: 0.78rem;
+        color: var(--ink-faint);
+        line-height: 1.52;
+        margin-top: 0.5mm;
+      }
+
+      /* ===== Expansion table (기술 축 확장) ===== */
+      .expand .row {
+        grid-template-columns: 38mm 1fr 36mm;
+        gap: 0 5mm;
+        padding: 2mm 0;
+      }
+
+      .expand .when {
+        color: var(--ink);
+        font-weight: 500;
+      }
+
+      .expand .when em {
+        display: block;
+        font-style: normal;
+        font-size: 0.7rem;
+        color: var(--ink-faint);
+        font-weight: 400;
+      }
+
+      .expand .out {
+        font-size: 0.73rem;
+        color: var(--accent);
+        line-height: 1.5;
+        padding-top: 0.5mm;
+      }
+
+      .expand-head .when,
+      .expand-head .what,
+      .expand-head .out {
+        font-size: 0.68rem;
+        letter-spacing: 0.06em;
+        color: var(--ink-faint);
+        font-weight: 600;
+      }
+
+      /* ===== Network table ===== */
+      .network .row {
+        grid-template-columns: 52mm 16mm 1fr;
+        gap: 0 5mm;
+        padding: 1.5mm 0;
+      }
+
+      .network .what-title {
+        font-size: 0.8rem;
+      }
+
+      .kind {
+        font-size: 0.7rem;
+        color: var(--accent);
+        font-weight: 600;
+        padding-top: 0.8mm;
+        letter-spacing: 0.02em;
+      }
+
+      /* ===== Project block ===== */
+      .proj {
+        padding: 4mm 0;
+        border-top: 1px solid var(--rule-soft);
+      }
+
+      .proj:first-of-type {
+        border-top: none;
+        padding-top: 1.5mm;
+      }
+
+      .proj-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 4mm;
+        margin-bottom: 1mm;
+      }
+
+      .proj-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        line-height: 1.38;
+        letter-spacing: -0.018em;
+      }
+
+      .proj-when {
+        font-size: 0.74rem;
+        color: var(--ink-faint);
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .proj-context {
+        font-size: 0.75rem;
+        color: var(--accent);
+        margin-bottom: 2mm;
+        padding-bottom: 1.6mm;
+        border-bottom: 1px dotted var(--rule);
+      }
+
+      .proj-desc {
+        font-size: 0.84rem;
+        color: var(--ink-soft);
+        line-height: 1.66;
+      }
+
+      .proj-desc + .proj-desc {
+        margin-top: 1.6mm;
+      }
+
+      .proj-desc strong {
+        font-weight: 600;
+        color: var(--ink);
+      }
+
+      .proj-tech {
+        font-size: 0.74rem;
+        color: var(--ink-faint);
+        margin-top: 2mm;
+        padding-top: 1.4mm;
+        border-top: 1px dotted var(--rule);
+      }
+
+      /* ===== Figures ===== */
+      .fig {
+        margin-top: 3mm;
+      }
+
+      .fig-wide {
+        max-width: 128mm;
+      }
+
+      .fig-pair {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4mm;
+        align-items: start;
+      }
+
+      .fig img {
+        width: 100%;
+        display: block;
+        border: 1px solid var(--rule);
+        background: #fff;
+      }
+
+      .fig-cap {
+        font-size: 0.66rem;
+        color: var(--ink-faint);
+        line-height: 1.5;
+        margin-top: 1.2mm;
+      }
+
+      .fig-cap b {
+        color: var(--ink-soft);
+        font-weight: 600;
+      }
+
+      /* ===== Viewpoint ===== */
+      .view {
+        padding: 3.5mm 0;
+        border-top: 1px solid var(--rule-soft);
+      }
+
+      .view:first-of-type {
+        border-top: none;
+        padding-top: 1mm;
+      }
+
+      .view-claim {
+        font-size: 0.92rem;
+        font-weight: 700;
+        line-height: 1.45;
+        letter-spacing: -0.02em;
+        margin-bottom: 1.4mm;
+      }
+
+      .view-body {
+        font-size: 0.84rem;
+        color: var(--ink-soft);
+        line-height: 1.66;
+      }
+
+      .view-body strong {
+        font-weight: 600;
+        color: var(--ink);
+      }
+
+      /* ===== Closing ===== */
+      .close .row {
+        grid-template-columns: 62mm 1fr;
+        padding: 2mm 0;
+      }
+
+      .axes .when {
+        color: var(--ink);
+        font-weight: 600;
+        font-size: 0.79rem;
+        padding-top: 0.7mm;
+      }
+
+      .close .when {
+        color: var(--ink);
+        font-weight: 600;
+        font-size: 0.78rem;
+        line-height: 1.55;
+      }
+
+      .footnote {
+        margin-top: 8mm;
+        padding-top: 2.5mm;
+        border-top: 1px solid var(--rule-soft);
+        font-size: 0.77rem;
+        color: var(--ink-faint);
+      }
+
+      /* ===== Print button ===== */
+      .print-btn {
+        position: fixed;
+        top: 18px;
+        right: 18px;
+        z-index: 10;
+        font: inherit;
+        font-size: 0.82rem;
+        padding: 7px 15px;
+        color: #fff;
+        background: var(--ink);
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+      }
+
+      .print-btn:hover,
+      .print-btn:focus-visible {
+        background: var(--accent);
+      }
+
+      .print-btn:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+
+      .hint {
+        max-width: 210mm;
+        margin: 0 auto 24px;
+        font-size: 0.75rem;
+        color: var(--ink-faint);
+        text-align: center;
+      }
+
+      /* ===== Narrow screens ===== */
+      @media screen and (max-width: 640px) {
+        .sheet {
+          padding: 12mm 7mm;
+        }
+
+        .row,
+        .expand .row,
+        .network .row,
+        .close .row {
+          grid-template-columns: 1fr;
+          gap: 0.8mm 0;
+        }
+
+        .expand-head {
+          display: none;
+        }
+
+        .fig-wide {
+        max-width: 128mm;
+      }
+
+      .fig-pair {
+          grid-template-columns: 1fr;
+        }
+
+        .proj-head {
+          flex-direction: column;
+          gap: 0.5mm;
+        }
+
+        .rail-label {
+          text-align: left;
+        }
+      }
+
+      /* ========================================
+         Print Styles — 반드시 스타일시트 마지막에 둘 것
+         ======================================== */
+      @page {
+        size: A4 portrait;
+        margin: 14mm 16mm;
+      }
+
+      @media print {
+        html {
+          font-size: 10pt;
+        }
+
+        body {
+          background: #fff;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+
+        .sheet {
+          max-width: none;
+          margin: 0;
+          padding: 0;
+          box-shadow: none;
+        }
+
+        .no-print {
+          display: none !important;
+        }
+
+        .gantt-scroll {
+          overflow-x: visible;
+        }
+
+        .gantt {
+          min-width: 0;
+        }
+
+        .row,
+        .proj,
+        .view,
+        .head,
+        .fig,
+        .gantt,
+        .expand {
+          break-inside: avoid;
+          page-break-inside: avoid;
+        }
+
+        .section-title,
+        .proj-head,
+        .view-claim,
+        .section-intro {
+          break-after: avoid;
+          page-break-after: avoid;
+        }
+
+        .page-break {
+          break-before: page;
+          page-break-before: always;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <button class="print-btn no-print" onclick="window.print()">
+      PDF로 저장 / 인쇄
+    </button>
+
+    <div class="sheet">
+      <header class="head">
+        <div class="doc-type">포트폴리오</div>
+        <h1 class="name">이용학</h1>
+        <p class="title-line">
+          응용통계학 박사 · AI R&amp;D 과제 기획 · 3차원 계측 모델 개발
+        </p>
+        <div class="contact">
+          <span>feint225@gmail.com</span>
+          <span>010-8295-3294</span>
+        </div>
+      </header>
+
+      <p class="lead">
+        국가 R&amp;D 과제 8건을 시간 순으로 늘어놓으면 하나의 흐름이 보입니다.
+        영상 분석에서 시작해 3차원 계측으로 옮겨간 뒤,
+        <strong>2023년부터는 같은 기술 축을 서로 다른 공고에 맞춰 다시
+        제안하는 방식으로 과제가 연달아 이어졌습니다.</strong> 이 문서는 그
+        흐름을 만든 판단과, 각 과제에서 실제로 맡았던 일을 정리한 것입니다.
+      </p>
+
+      <!-- ==================== 계보도 ==================== -->
+      <section class="section">
+        <h2 class="section-title">
+          국가 R&amp;D 과제 계보
+          <span class="section-note">2019.12 – 2025.12 · 8건</span>
+        </h2>
+
+        <div class="gantt-scroll">
+          <div class="gantt">
+            <div class="gantt-band" aria-hidden="true"></div>
+            <div class="col-guide" style="grid-column: 4" aria-hidden="true"></div>
+            <div class="col-guide" style="grid-column: 6" aria-hidden="true"></div>
+            <div class="col-guide" style="grid-column: 8" aria-hidden="true"></div>
+            <div class="col-guide mark" style="grid-column: 10" aria-hidden="true"></div>
+            <div class="col-guide" style="grid-column: 12" aria-hidden="true"></div>
+            <div class="col-guide" style="grid-column: 14" aria-hidden="true"></div>
+            <div class="col-guide" style="grid-column: 16" aria-hidden="true"></div>
+
+            <!-- 축 -->
+            <div class="axis-pad"></div>
+            <div class="axis-year" style="grid-column: 2 / 4">2019</div>
+            <div class="axis-year" style="grid-column: 4 / 6">2020</div>
+            <div class="axis-year" style="grid-column: 6 / 8">2021</div>
+            <div class="axis-year" style="grid-column: 8 / 10">2022</div>
+            <div class="axis-year" style="grid-column: 10 / 12">2023</div>
+            <div class="axis-year" style="grid-column: 12 / 14">2024</div>
+            <div class="axis-year" style="grid-column: 14 / 16">2025</div>
+            <div class="axis-year" style="grid-column: 16 / 17">2026</div>
+
+            <!-- 1 -->
+            <div class="bar-label" style="grid-row: 2">
+              <div class="bar-name">
+                딥러닝 · 이미지 프로세싱 기반 미세먼지 측정기술 개발
+              </div>
+              <div class="bar-when">2019.12 – 2021.01</div>
+            </div>
+            <div class="bar-track" style="grid-row: 2"></div>
+            <div class="bar" style="grid-row: 2; grid-column: 3 / 7"></div>
+
+            <!-- 2 -->
+            <div class="bar-label" style="grid-row: 3">
+              <div class="bar-name">
+                비대면 비전 솔루션 기반 쓰레기 배출 감시 시스템 개발
+              </div>
+              <div class="bar-when">2020.12 – 2021.11</div>
+            </div>
+            <div class="bar-track" style="grid-row: 3"></div>
+            <div class="bar" style="grid-row: 3; grid-column: 5 / 8"></div>
+
+            <!-- 3 -->
+            <div class="bar-label" style="grid-row: 4">
+              <div class="bar-name">
+                3차원 자료를 활용한 영상인식 및 방역로봇 자율주행 연구
+              </div>
+              <div class="bar-when">2021.09 – 2024.02</div>
+            </div>
+            <div class="bar-track" style="grid-row: 4"></div>
+            <div class="bar" style="grid-row: 4; grid-column: 7 / 13"></div>
+
+            <!-- 4 -->
+            <div class="bar-label" style="grid-row: 5">
+              <div class="bar-name">
+                적대적 샘플 공격에 대한 AI 취약점 분석과 대응방안 연구
+              </div>
+              <div class="bar-when">2023.03 – 2024.02</div>
+            </div>
+            <div class="bar-track" style="grid-row: 5"></div>
+            <div class="bar" style="grid-row: 5; grid-column: 10 / 13"></div>
+
+            <!-- 5 -->
+            <div class="bar-label" style="grid-row: 6">
+              <div class="bar-name">
+                온라인 중고 거래 활성화를 위한 옷 치수 자동 측정 솔루션 고도화
+              </div>
+              <div class="bar-when">2023.09 – 2024.07</div>
+            </div>
+            <div class="bar-track" style="grid-row: 6"></div>
+            <div
+              class="bar axis3d"
+              style="grid-row: 6; grid-column: 11 / 14"
+            ></div>
+
+            <!-- 6 -->
+            <div class="bar-label" style="grid-row: 7">
+              <div class="bar-name">
+                업소용 기자재 중고 거래를 위한 사이즈 · 무게 측정 솔루션 고도화
+              </div>
+              <div class="bar-when">2024.10 – 2025.09</div>
+            </div>
+            <div class="bar-track" style="grid-row: 7"></div>
+            <div
+              class="bar axis3d"
+              style="grid-row: 7; grid-column: 13 / 16"
+            ></div>
+
+            <!-- 7 -->
+            <div class="bar-label" style="grid-row: 8">
+              <div class="bar-name">
+                소아 · 청소년 헬스케어 앱을 위한 비만 판정 및 자세 교정
+              </div>
+              <div class="bar-when">2024.11 – 2025.10</div>
+            </div>
+            <div class="bar-track" style="grid-row: 8"></div>
+            <div
+              class="bar axis3d"
+              style="grid-row: 8; grid-column: 13 / 16"
+            ></div>
+
+            <!-- 8 -->
+            <div class="bar-label" style="grid-row: 9">
+              <div class="bar-name">
+                K-뷰티 초개인 맞춤화를 위한 모바일 피부분석 AI 솔루션 개발
+              </div>
+              <div class="bar-when">2025.05 – 2025.12</div>
+            </div>
+            <div class="bar-track" style="grid-row: 9"></div>
+            <div
+              class="bar axis3d"
+              style="grid-row: 9; grid-column: 14 / 16"
+            ></div>
+
+            <!-- rails -->
+            <div class="rail-rule" aria-hidden="true"></div>
+
+            <div class="rail-label" style="grid-row: 11">논문 게재</div>
+            <div class="rail-cell paper" style="grid-row: 11; grid-column: 4 / 6">
+              2
+            </div>
+            <div class="rail-cell paper" style="grid-row: 11; grid-column: 8 / 10">
+              3
+            </div>
+            <div
+              class="rail-cell paper"
+              style="grid-row: 11; grid-column: 10 / 12"
+            >
+              2
+            </div>
+            <div
+              class="rail-cell paper"
+              style="grid-row: 11; grid-column: 12 / 14"
+            >
+              2
+            </div>
+            <div
+              class="rail-cell paper"
+              style="grid-row: 11; grid-column: 14 / 16"
+            >
+              3
+            </div>
+            <div
+              class="rail-cell paper"
+              style="grid-row: 11; grid-column: 16 / 17"
+            >
+              1
+            </div>
+
+            <div class="rail-label" style="grid-row: 12">특허</div>
+            <div class="rail-cell" style="grid-row: 12; grid-column: 12 / 13">
+              출원
+            </div>
+            <div class="rail-cell" style="grid-row: 12; grid-column: 13 / 14">
+              출원
+            </div>
+            <div class="rail-cell" style="grid-row: 12; grid-column: 15 / 16">
+              등록
+            </div>
+          </div>
+        </div>
+
+        <div class="legend">
+          <span><i class="swatch ink"></i>영상 분석 · 자율주행 · 신뢰성 과제</span>
+          <span><i class="swatch acc"></i>3D 계측 기술 축에서 파생된 과제</span>
+          <span><i class="swatch band"></i>기술 축이 연속 파생된 구간 (2023– )</span>
+        </div>
+      </section>
+
+      <!-- ==================== 확장 전략 ==================== -->
+      <section class="section expand">
+        <h2 class="section-title">기술 축 하나를 네 개 과제로 확장한 방식</h2>
+
+        <p class="section-intro">
+          모바일 LiDAR 기반 3차원 계측이라는 하나의 코어를 두고, 공고마다 요구가
+          다른 지점을 찾아 그 부분만 새로 설계하는 방식으로 제안했습니다. 기존
+          자산을 재사용하니 개발 위험이 낮았고, 매번 다른 도메인을 다루니 코어
+          자체가 함께 넓어졌습니다.
+        </p>
+
+        <div class="row expand-head">
+          <div class="when">과제 · 공고의 요구</div>
+          <div class="what">기술 축에서 새로 설계한 부분</div>
+          <div class="out">산출물</div>
+        </div>
+
+        <div class="row">
+          <div class="when">
+            옷 치수 자동 측정
+            <em>중고 거래 활성화 · 2023.09</em>
+          </div>
+          <div class="what">
+            촬영 환경 통제와 참조물 없이도 재현되는 측정. 평면에 놓인 대상의
+            키포인트를 깊이 맵 경계선으로 보정하는 구조를 확립했습니다.
+          </div>
+          <div class="out">논문 · Appl.Sci.</div>
+        </div>
+
+        <div class="row">
+          <div class="when">
+            업소용 기자재 사이즈 · 무게
+            <em>소상공인 중고 거래 · 2024.10</em>
+          </div>
+          <div class="what">
+            길이만으로는 값이 나오지 않는 <b>무게</b>가 요구 지표였습니다. 측정한
+            길이를 설명변수로 쓰는 회귀식을 붙여 직접 재기 어려운 물성까지
+            추정하도록 확장했습니다.
+          </div>
+          <div class="out">논문 · IEEE Access</div>
+        </div>
+
+        <div class="row">
+          <div class="when">
+            소아 · 청소년 비만 판정
+            <em>모바일 헬스케어 · 2024.11</em>
+          </div>
+          <div class="what">
+            대상이 옷을 입은 인체로 바뀌면서 둘레 추정이 필요해졌습니다. 정면과
+            측면 계측값을 합치는 회귀 상수를 실측 데이터에서 도출해
+            적용했습니다.
+          </div>
+          <div class="out">논문 · Appl.Sci. / 특허</div>
+        </div>
+
+        <div class="row">
+          <div class="when">
+            모바일 피부분석 AI
+            <em>K-뷰티 초개인 맞춤화 · 2025.05</em>
+          </div>
+          <div class="what">
+            계측 대상이 얼굴의 미세 굴곡으로 내려가면서, 2차원 영상과 3차원
+            깊이를 융합해 부위별 주름을 검출하는 방법으로 재구성했습니다.
+          </div>
+          <div class="out">특허 등록</div>
+        </div>
+      </section>
+
+      <!-- ==================== 대표 성과 ==================== -->
+      <section class="section">
+        <h2 class="section-title">
+          대표 성과
+          <span class="section-note">4건</span>
+        </h2>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-title">
+              모바일 LiDAR 기반 3차원 계측 및 속성 추정
+            </h3>
+            <span class="proj-when">2023.01 – 2026.06</span>
+          </div>
+          <div class="proj-context">
+            국가 R&amp;D 과제 4건 · 학술지 논문 3편 · 특허 2건이 이 축에서
+            나왔습니다
+          </div>
+          <p class="proj-desc">
+            사진 한 장에는 거리 정보가 없어, 기존 방식은 자를 함께 찍거나 촬영
+            거리를 고정해야 실제 치수를 얻을 수 있었습니다. 현장에서 그 조건을
+            지키기 어렵다는 점이 과제의 출발점이었습니다. 딥러닝이 찾은 키포인트에
+            라이다 깊이를 매핑해 참조물 없이 치수를 산출하되, 2차원 키포인트가
+            3차원 공간의 실제 경계와 어긋나는 문제를 깊이 맵의 경계선으로
+            보정했습니다.
+            <strong>보정 전 19.2%였던 상대오차가 5%대로 떨어졌습니다.</strong>
+          </p>
+          <p class="proj-desc">
+            3차원 메시를 복원하지 않는 구조라 스마트폰에서 실시간으로 동작했고, 같은
+            파이프라인을 의류 · 농산물 · 인체에 그대로 적용할 수 있었습니다.
+            의류 치수는 상대오차 1.6~2.1%로 수동 측정(3.25%)보다 정확했고, 딸기는
+            폭 오차 3.7%, 인체는 주요 부위 대부분에서 8% 이내였습니다.
+          </p>
+          <div class="fig fig-pair">
+            <div>
+              <img
+                src="../images/project04_01.png"
+                alt="딸기 촬영에서 키포인트 검출, 3D 좌표 매핑, 크기 계산과 무게 예측까지의 파이프라인 도식"
+              />
+              <p class="fig-cap">
+                <b>파이프라인</b> 촬영 → 키포인트 검출 → 2D-3D 좌표 매핑 → 크기
+                산출 및 무게 예측. IEEE Access, 2024
+              </p>
+            </div>
+            <div>
+              <img
+                src="../images/project04_02.png"
+                alt="반팔 상의, 긴팔 상의, 반바지, 바지, 스커트에 대해 배경 유무를 달리해 자동 측정한 치수 결과"
+              />
+              <p class="fig-cap">
+                <b>환경 변화 검증</b> 배경을 통제한 경우와 통제하지 않은 경우의
+                의류 5종 측정 결과. Applied Sciences, 2022
+              </p>
+            </div>
+          </div>
+          <div class="proj-tech">
+            Mobile LiDAR · 3D Point Cloud · HRNet · YOLOv6 · PyTorch ·
+            iPhone / iPad Pro on-device
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-title">영상 기반 미세먼지 농도 추정</h3>
+            <span class="proj-when">2020.01 – 2021.01</span>
+          </div>
+          <div class="proj-context">
+            첫 국가 R&amp;D 과제 · 메릴랜드대학교 · NASA 고다드 우주비행센터와
+            공동 저술
+          </div>
+          <p class="proj-desc">
+            국가 측정망은 정확하지만 설치와 유지 비용이 커서 도시에 몰려 있고,
+            그만큼 관측 사각지대가 생깁니다. 저비용 카메라로 그 공백을 메우는 것이
+            과제의 목적이었습니다. 기존 연구가 사진 한 장씩만 분석한 데 반해,
+            미세먼지는 공기 중을 떠다니는 입자라 <strong>시간에 따른 변화 자체가
+            정보</strong>라고 보고 연속 프레임의 픽셀별 평균을 시간적 사전정보로
+            만들어 원본과 함께 입력했습니다.
+          </p>
+          <p class="proj-desc">
+            실외 상관계수가 0.72에서 0.82로 올랐고, 실내에서는 개선 폭이 작았습니다.
+            바람이 불어 입자가 실제로 유동하는 상황에서만 시간 정보가 기여한다는
+            뜻이었고, 이 해석을 논문에 그대로 실었습니다. 라즈베리 파이에서 돌아가도록
+            연산량을 조정해 과제가 요구한 저비용 조건을 맞췄습니다.
+          </p>
+          <div class="fig fig-pair">
+            <div>
+              <img
+                src="../images/project01_01.png"
+                alt="RGB 프레임과 시간적 사전정보를 함께 입력받아 특징 추출망과 영상 복원망을 거치는 네트워크 구조도"
+              />
+              <p class="fig-cap">
+                <b>네트워크 구조</b> RGB 프레임과 시간적 사전정보를 결합해 입력하는
+                구성. Journal of Sensors, 2020
+              </p>
+            </div>
+            <div>
+              <img
+                src="../images/project01_02.png"
+                alt="농도 15과 37 마이크로그램 조건에서 관측 영상과 추정된 헤이즈 성분을 비교한 이미지"
+              />
+              <p class="fig-cap">
+                <b>추정 결과</b> 농도 15 / 37 μg/m³ 조건의 관측 영상과 추정된 헤이즈
+                성분 비교
+              </p>
+            </div>
+          </div>
+          <div class="proj-tech">Raspberry Pi · Python · OpenCV · Raspberry Pi 4B</div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-title">시각 이미지와 메타데이터를 통합한 상품 추천</h3>
+            <span class="proj-when">2021.01 – 2022.01</span>
+          </div>
+          <div class="proj-context">
+            제1저자 논문 · 석사 학위논문의 토대
+          </div>
+          <p class="proj-desc">
+            이미지만으로는 브랜드나 소재를 알 수 없고 텍스트만으로는 디자인을 알 수
+            없어, 두 정보를 결합했습니다. 설계의 핵심은 두 상품의 특징 벡터를 이어
+            붙이는 데 그치지 않고
+            <strong>차이의 절댓값을 함께 입력한 것</strong>입니다. 관계 판정에 필요한
+            유사도를 모델이 스스로 계산하게 두지 않고 직접 제공한 셈입니다.
+          </p>
+          <p class="proj-desc">
+            이미지 단독 70.9%, 텍스트 단독 96.6%였던 정확도가 결합 시 98.2%가
+            되었습니다. 모바일 연산 제약을 전제로 MobileNetV3와 Sentence-BERT를
+            골랐고, 한국어와 영어가 섞인 데이터는 언어별로 모델을 분리했을 때와
+            통합했을 때를 비교 검증했습니다.
+          </p>
+          <div class="fig fig-wide">
+            <img
+              src="../images/project02_02.png"
+              alt="두 상품의 이미지 특징과 텍스트 특징, 그리고 각각의 차이 절댓값을 이어 붙여 관계를 예측하는 모델 구조도"
+            />
+            <p class="fig-cap">
+              <b>모델 구조</b> 두 상품의 이미지 · 텍스트 특징과 각 차이의 절댓값을
+              이어 붙여 관계를 예측. Quant. Bio-Science, 2022
+            </p>
+          </div>
+          <div class="proj-tech">Python · PyTorch · MobileNetV3 · Sentence-BERT</div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-title">로봇 센서 데이터 기반 가스배관 구간 탐지</h3>
+            <span class="proj-when">2022.01 – 2023.01</span>
+          </div>
+          <div class="proj-context">
+            모델을 키우는 대신 데이터의 구조를 다시 본 사례
+          </div>
+          <p class="proj-desc">
+            배관 내부를 주행하는 로봇의 센서 신호만으로 접합부와 만곡부를 찾는
+            과제였습니다. 처음 적용한 다층 신경망이 성능을 내지 못했는데, 원인은
+            모델의 크기가 아니라 <strong>입력 크기가 고정되어야 한다는 구조적
+            제약</strong>이었습니다. 배관 구간은 길이가 제각각인데, 자르고 채우는
+            과정에서 신호가 왜곡되고 있었습니다.
+          </p>
+          <p class="proj-desc">
+            입력 길이 제약이 없는 트리 기반 모델로 바꾸고, 분산 · 최대-최소 차이 ·
+            행 간 변화량 같은 파생변수로 가변 길이 구간을 고정 길이 벡터로
+            요약했습니다. 접합부를 먼저 찾고 그 사이를 만곡부 후보로 다시 정의하는
+            단계적 접근으로 문제를 나눴습니다.
+          </p>
+          <div class="fig fig-pair">
+            <div>
+              <img
+                src="../images/project03_01.png"
+                alt="접합부 위치를 붉은 선으로 표시한 두 개의 다채널 센서 신호 그래프"
+              />
+              <p class="fig-cap">
+                <b>원신호</b> 접합부(붉은 선) 부근에서 다채널 센서 값이 급격히
+                흔들리는 구간
+              </p>
+            </div>
+            <div>
+              <img
+                src="../images/project03_02.png"
+                alt="접합부 경계를 점선으로 나누고 구간을 두 색으로 번갈아 칠한 신호 분할 결과 그래프"
+              />
+              <p class="fig-cap">
+                <b>구간 분할</b> 탐지한 접합부 경계로 구간을 나누고 만곡부 후보를 다시
+                정의한 결과
+              </p>
+            </div>
+          </div>
+          <div class="proj-tech">Python · Random Forest · LightGBM · time-series sensor data</div>
+        </article>
+      </section>
+
+      <!-- ==================== 협력 네트워크 ==================== -->
+      <section class="section network">
+        <h2 class="section-title">
+          산 · 학 · 연 협력 네트워크
+          <span class="section-note">공동 연구 · 과제 참여 기관</span>
+        </h2>
+
+        <p class="section-intro">
+          과제와 논문은 대부분 기관 사이에서 만들어졌습니다. 아래는 과제를 함께
+          수행했거나 논문을 함께 쓴 기관입니다.
+        </p>
+
+        <div class="row">
+          <div class="what-title">건국대학교 산학협력단</div>
+          <div class="kind">학 · 관리</div>
+          <div class="what">
+            산학협력단을 통해 관리되는 과제에 참여하며 연구노트와 산출물 관리
+            체계를 경험
+          </div>
+        </div>
+        <div class="row">
+          <div class="what-title">
+            건국대학교 응용통계 · 환경보건과학 · 데이터사이언스 ·
+            스마트운행체공학과
+          </div>
+          <div class="kind">학 · 연구</div>
+          <div class="what">
+            학과 간 공동 연구로 계측 · 생성모델 · 자율주행 논문을 함께 저술
+          </div>
+        </div>
+        <div class="row">
+          <div class="what-title">육군사관학교 인공지능 · 데이터사이언스학과</div>
+          <div class="kind">학 · 연구</div>
+          <div class="what">
+            의류 치수 계측 논문 공동 저술, 적대적 샘플 취약점 대응 과제로 연계
+          </div>
+        </div>
+        <div class="row">
+          <div class="what-title">광운대학교 컴퓨터정보공학과</div>
+          <div class="kind">학 · 연구</div>
+          <div class="what">
+            3차원 스캔 데이터의 제조 가능 형상 복원 연구 공동 저술 (IEEE
+            Access, 2026)
+          </div>
+        </div>
+        <div class="row">
+          <div class="what-title">한양대학교 미래자동차공학과</div>
+          <div class="kind">학 · 연구</div>
+          <div class="what">방역로봇 자율주행 과제의 강화학습 연구 공동 저술</div>
+        </div>
+        <div class="row">
+          <div class="what-title">
+            서울대학교 IPAI · 전북대학교 치의학전문대학원
+          </div>
+          <div class="kind">학 · 의료</div>
+          <div class="what">
+            치과 영상 데이터 증강 연구에서 임상 데이터와 판독 기준을 협의
+          </div>
+        </div>
+        <div class="row">
+          <div class="what-title">
+            메릴랜드대학교 지구시스템과학협동센터 · NASA 고다드 우주비행센터
+          </div>
+          <div class="kind">해외</div>
+          <div class="what">
+            미세먼지 농도 추정 연구를 공동 저술 (Journal of Sensors, 2020)
+          </div>
+        </div>
+        <div class="row">
+          <div class="what-title">수요기업 · 지자체</div>
+          <div class="kind">산 · 공</div>
+          <div class="what">
+            과제 요구사항 정의와 실증 협의, 현장 데이터 확보. 쓰레기 배출 감시
+            시스템은 구청과 협력해 수행
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 연구 축 ==================== -->
+      <section class="section axes">
+        <h2 class="section-title">
+          논문 13편의 연구 축
+          <span class="section-note">2020 – 2026</span>
+        </h2>
+
+        <p class="section-intro">
+          편수보다 축이 중요하다고 생각합니다. 13편을 주제로 묶으면 다섯 갈래가
+          되고, 그중 첫 갈래가 박사 연구와 과제 대부분의 중심입니다.
+        </p>
+
+        <div class="row">
+          <div class="when">3차원 계측</div>
+          <div class="what">
+            의류(2022) → 농산물(2024) → 인체(2025). 대상이 평면에서 입체로,
+            정형에서 비정형으로 넓어지는 순서입니다.
+            <span class="what-note"
+              >박사 학위논문의 중심 · 과제 4건 · 특허 2건이 여기서 파생</span
+            >
+          </div>
+        </div>
+        <div class="row">
+          <div class="when">멀티모달 결합</div>
+          <div class="what">
+            이미지 + 텍스트 결합으로 상품 관계 예측(2022, 제1저자) → 대규모
+            언어모델로 프롬프트를 확장해 앞뒤가 일관된 의류 이미지
+            생성(2025, 교신저자).
+          </div>
+        </div>
+        <div class="row">
+          <div class="when">데이터 부족 대응</div>
+          <div class="what">
+            라벨이 적을 때의 준지도 분할(2023)과 생성모델을 이용한 의료 영상
+            증강(2023). 현장 과제에서 가장 자주 부딪히는 제약입니다.
+          </div>
+        </div>
+        <div class="row">
+          <div class="when">계측 데이터의 보호</div>
+          <div class="what">
+            신체 치수는 그 자체가 민감정보입니다. 분산 저장(2024)과 분실 시
+            복구 메커니즘(2025)으로 이어졌습니다.
+          </div>
+        </div>
+        <div class="row">
+          <div class="when">그 외</div>
+          <div class="what">
+            3차원 스캔 데이터의 형상 복원(2026), 영상 기반 미세먼지 추정(2020),
+            강화학습 리플레이 메모리(2020), 금융 차트 패턴 검출(2022).
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 관점 ==================== -->
+      <section class="section">
+        <h2 class="section-title">
+          AI R&amp;D 기획에 대한 관점
+          <span class="section-note">과제를 수행하며 얻은 세 가지</span>
+        </h2>
+
+        <article class="view">
+          <h3 class="view-claim">
+            과제의 성패는 성능 상한이 아니라 제약 조건에서 갈립니다.
+          </h3>
+          <p class="view-body">
+            미세먼지 추정은 라즈베리 파이에서, 상품 추천은 모바일 연산 예산 안에서,
+            인체 계측은 3D 복원을 생략한 채로 풀었습니다. 셋 다 가장 좋은 모델을
+            고른 것이 아니라
+            <strong>현장 제약 안에서 약속한 수치를 맞추는 설계를 고른 것</strong>입니다.
+            기획 단계에서 정량 목표를 세울 때 성능 지표만 적고 단가 · 연산량 · 촬영
+            환경 같은 제약을 적지 않으면, 목표는 달성해도 쓰이지 않는 결과물이
+            남습니다. 목표치와 제약 조건을 한 쌍으로 쓰는 것이 제안서에서 가장 먼저
+            챙길 부분이라고 봅니다.
+          </p>
+        </article>
+
+        <article class="view">
+          <h3 class="view-claim">
+            기술 병목보다 데이터 확보 병목이 먼저 옵니다.
+          </h3>
+          <p class="view-body">
+            생성모델로 치과 영상을 늘렸을 때, 단순한 시뮬레이션 데이터에서는 성능이
+            두 배가 되었지만 실제 데이터에서는 개선이 10% 남짓이었습니다.
+            <strong>합성 데이터에서 잘 되는 것이 실제 데이터에서 잘 될 근거가 되지
+            못한다</strong>는 것을 그때 확인했습니다. 준지도 학습도 마찬가지로 라벨
+            부족을 완화할 뿐 없애지는 못했습니다. 그래서 과제를 기획할 때 데이터
+            확보 · 구축을 모델 개발의 부수 작업이 아니라 별도의 일정과 예산 항목으로
+            잡아야 한다고 생각합니다.
+          </p>
+        </article>
+
+        <article class="view">
+          <h3 class="view-claim">
+            정량 목표는 검증 방법까지 함께 써야 목표가 됩니다.
+          </h3>
+          <p class="view-body">
+            인체 계측 연구의 최종 검증 표본은 4명이었습니다. 보정으로 오차가
+            19.2%에서 5%대로 줄었다는 <strong>상대적 개선 주장은 표본이 작아도
+            방향이 유지되지만, 절대 정확도 주장은 그 표본으로 뒷받침되지
+            않습니다.</strong> 두 주장은 요구하는 표본 크기가 다른데, 제안서에는
+            대개 숫자만 적힙니다. 목표치와 함께 검증 대상 · 표본 크기 · 비교 기준을
+            명시해 두면 최종 평가 단계에서 해석이 갈리는 일을 줄일 수 있습니다.
+          </p>
+        </article>
+      </section>
+
+      <!-- ==================== 지원 포지션과의 연결 ==================== -->
+      <section class="section close">
+        <h2 class="section-title">지원 포지션과의 연결</h2>
+
+        <div class="row">
+          <div class="when">
+            정부 R&amp;D 과제의 기획 · 제안 · 수행
+          </div>
+          <div class="what">
+            8건의 과제에 기획 단계부터 참여했습니다. 공고를 읽고 목표를 세우는
+            쪽과 그 목표에 맞춰 개발하고 보고서를 쓰는 쪽을 모두 경험했기
+            때문에, 기획한 과제가 현장에서 어떻게 굴러가는지 예측할 수
+            있습니다.
+          </div>
+        </div>
+        <div class="row">
+          <div class="when">
+            외부 기관 · 내부 R&amp;D 조직과의 커뮤니케이션
+          </div>
+          <div class="what">
+            산학협력단 · 대학 6곳 · 해외 연구기관 · 수요기업 · 지자체와 과제
+            협의와 공동 저술을 진행했습니다. 서로 목표가 다른 기관을 하나의
+            산출물로 수렴시키는 일이 과제의 대부분이었습니다.
+          </div>
+        </div>
+        <div class="row">
+          <div class="when">기술 트렌드에 기반한 전략 방향 수립</div>
+          <div class="what">
+            검출 · 분할 · 3차원 계측에서 생성모델과 대규모 언어모델 활용까지 직접 구현하며
+            따라왔고, 영문 학술지 11편의 심사 대응 과정에서 주장을 근거로
+            방어하는 훈련을 반복했습니다. 기술을 읽는 눈과 그것을 문서로 설득하는
+            일을 함께 해왔습니다.
+          </div>
+        </div>
+      </section>
+
+      <p class="footnote">
+        학력 · 경력 · 자격과 과제 · 논문 · 특허의 전체 목록은 이력서 및
+        경력기술서에 기재했습니다.
+      </p>
+    </div>
+
+    <p class="hint no-print">
+      우측 상단 버튼 또는 Ctrl+P(⌘+P) → 대상을 &ldquo;PDF로 저장&rdquo;으로
+      지정하세요. 배경 그래픽 옵션을 켜면 계보도의 음영이 함께 인쇄됩니다.
+    </p>
+  </body>
+</html>

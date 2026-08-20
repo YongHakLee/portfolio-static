@@ -1,0 +1,1195 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="이용학 이력서 · 경력기술서 — AI R&D 전략·정부과제 기획"
+    />
+    <title>이력서 · 경력기술서 이용학</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ===== Reset ===== */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --ink: #16181c;
+        --ink-soft: #55585f;
+        --ink-faint: #8a8e97;
+        --rule: #d6d8dc;
+        --rule-soft: #ecedef;
+        --accent: #8a1538;
+        --accent-soft: #f5e9ec;
+        --desk: #efefee;
+      }
+
+      html {
+        font-size: 16px;
+      }
+
+      body {
+        font-family:
+          "Pretendard",
+          -apple-system,
+          BlinkMacSystemFont,
+          system-ui,
+          "Segoe UI",
+          Roboto,
+          "Helvetica Neue",
+          sans-serif;
+        color: var(--ink);
+        line-height: 1.6;
+        letter-spacing: -0.005em;
+        background: var(--desk);
+      }
+
+      ul {
+        list-style: none;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* ===== Mono utility face — dates, counts, labels ===== */
+      .mono,
+      .doc-type,
+      .proj-when,
+      .tag {
+        font-family:
+          "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* ===== Sheet ===== */
+      .sheet {
+        max-width: 210mm;
+        margin: 20px auto;
+        padding: 12mm 16mm;
+        background: #fff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      }
+
+      /* ===== Header ===== */
+      .head {
+        display: flex;
+        align-items: flex-start;
+        gap: 10mm;
+        padding-bottom: 5mm;
+        border-bottom: 2px solid var(--ink);
+      }
+
+      .head-body {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .doc-type {
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        color: var(--accent);
+        margin-bottom: 2mm;
+      }
+
+      .name {
+        font-size: 1.9rem;
+        font-weight: 700;
+        letter-spacing: -0.035em;
+        line-height: 1.15;
+        margin-bottom: 1.5mm;
+      }
+
+      .title-line {
+        font-size: 0.87rem;
+        color: var(--ink-soft);
+        margin-bottom: 3.5mm;
+      }
+
+      .contact {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5mm 6mm;
+        font-size: 0.83rem;
+        color: var(--ink-soft);
+      }
+
+      .photo {
+        width: 27mm;
+        flex-shrink: 0;
+      }
+
+      .photo img {
+        width: 100%;
+        display: block;
+        border: 1px solid var(--rule);
+      }
+
+      /* ===== Lead paragraph ===== */
+      .lead {
+        margin-top: 5mm;
+        font-size: 0.87rem;
+        line-height: 1.68;
+        color: var(--ink-soft);
+        padding-left: 4mm;
+        border-left: 2px solid var(--accent-soft);
+      }
+
+      .lead strong {
+        font-weight: 600;
+        color: var(--ink);
+      }
+
+      /* ===== Section ===== */
+      .section {
+        margin-top: 6.5mm;
+      }
+
+      .section-title {
+        display: flex;
+        align-items: center;
+        gap: 2.2mm;
+        font-size: 0.83rem;
+        font-weight: 700;
+        letter-spacing: 0.09em;
+        padding-bottom: 1.3mm;
+        margin-bottom: 2.8mm;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .section-title::before {
+        content: "";
+        width: 0.9mm;
+        height: 3.2mm;
+        background: var(--accent);
+        flex-shrink: 0;
+      }
+
+      .section-note {
+        margin-left: auto;
+        font-size: 0.75rem;
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        color: var(--ink-faint);
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* ===== Row: label column + content ===== */
+      .row {
+        display: grid;
+        grid-template-columns: 34mm 1fr;
+        gap: 0 5mm;
+        padding: 1.6mm 0;
+      }
+
+      .row + .row {
+        border-top: 1px solid var(--rule-soft);
+      }
+
+      .when {
+        font-size: 0.77rem;
+        color: var(--ink-faint);
+        line-height: 1.62;
+        padding-top: 0.5mm;
+        white-space: nowrap;
+      }
+
+      .what {
+        min-width: 0;
+      }
+
+      .what-title {
+        font-size: 0.89rem;
+        font-weight: 600;
+        line-height: 1.48;
+      }
+
+      .what-sub {
+        font-size: 0.84rem;
+        font-weight: 400;
+        color: var(--ink-soft);
+      }
+
+      .what-note {
+        font-size: 0.8rem;
+        color: var(--ink-faint);
+        line-height: 1.52;
+        margin-top: 0.5mm;
+      }
+
+      .row.compact {
+        padding: 1mm 0;
+      }
+
+      .row.compact .what-title {
+        font-size: 0.86rem;
+        font-weight: 500;
+        line-height: 1.42;
+      }
+
+      /* ===== Certificates: two per line ===== */
+      .cert-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 8mm;
+      }
+
+      .cert-grid .row {
+        grid-template-columns: 20mm 1fr;
+      }
+
+      .cert-grid .row:nth-child(-n + 2) {
+        border-top: none;
+      }
+
+      /* ===== Duty list ===== */
+      .duty-list {
+        font-size: 0.86rem;
+        color: var(--ink-soft);
+        margin-top: 1.4mm;
+      }
+
+      .duty-list li {
+        position: relative;
+        padding-left: 3.5mm;
+        line-height: 1.58;
+      }
+
+      .duty-list li::before {
+        content: "·";
+        position: absolute;
+        left: 0.8mm;
+        color: var(--ink-faint);
+      }
+
+      /* ===== Stage table (R&D 전주기) ===== */
+      .stage .row {
+        border-top: none;
+        padding: 1.3mm 0;
+        grid-template-columns: 24mm 1fr;
+      }
+
+      .stage .row + .row {
+        border-top: 1px solid var(--rule-soft);
+      }
+
+      .stage .when {
+        font-size: 0.79rem;
+        font-weight: 600;
+        color: var(--accent);
+        white-space: normal;
+      }
+
+      .stage .what {
+        font-size: 0.86rem;
+        color: var(--ink-soft);
+        line-height: 1.58;
+      }
+
+      /* ===== Skills table ===== */
+      .skills .row {
+        border-top: none;
+        padding: 1.1mm 0;
+        grid-template-columns: 28mm 1fr;
+      }
+
+      .skills .row + .row {
+        border-top: 1px solid var(--rule-soft);
+      }
+
+      .skills .when {
+        font-size: 0.79rem;
+        font-weight: 600;
+        color: var(--ink-soft);
+        white-space: normal;
+      }
+
+      .skills .what {
+        font-size: 0.86rem;
+        color: var(--ink-soft);
+        line-height: 1.55;
+      }
+
+      /* ===== Journal papers: year | venue | title ===== */
+      .papers .row {
+        grid-template-columns: 11mm 34mm 1fr;
+        gap: 0 4mm;
+        padding: 1.2mm 0;
+        align-items: baseline;
+      }
+
+      .papers .p-year {
+        font-family:
+          "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+        font-variant-numeric: tabular-nums;
+        font-size: 0.77rem;
+        color: var(--ink-faint);
+      }
+
+      .papers .p-venue {
+        font-size: 0.79rem;
+        color: var(--ink-soft);
+        line-height: 1.45;
+      }
+
+      .papers .p-title {
+        font-size: 0.86rem;
+        font-weight: 500;
+        line-height: 1.45;
+        text-wrap: pretty;
+      }
+
+      .papers .p-role {
+        font-weight: 400;
+        color: var(--accent);
+        white-space: nowrap;
+      }
+
+      /* ===== Project block ===== */
+      .proj {
+        padding: 3mm 0;
+        border-top: 1px solid var(--rule-soft);
+      }
+
+      .proj:first-of-type {
+        border-top: none;
+        padding-top: 1.5mm;
+      }
+
+      .proj-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 4mm;
+        margin-bottom: 0.8mm;
+      }
+
+      .proj-title {
+        font-size: 0.93rem;
+        font-weight: 700;
+        line-height: 1.38;
+        letter-spacing: -0.018em;
+      }
+
+      .proj-when {
+        font-size: 0.77rem;
+        color: var(--ink-faint);
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .proj-role {
+        font-size: 0.8rem;
+        color: var(--ink-faint);
+        margin-bottom: 1.6mm;
+      }
+
+      .proj-desc {
+        font-size: 0.87rem;
+        color: var(--ink-soft);
+        line-height: 1.64;
+      }
+
+      .proj-tech {
+        font-size: 0.78rem;
+        color: var(--ink-faint);
+        margin-top: 1.4mm;
+        padding-top: 1.2mm;
+        border-top: 1px dotted var(--rule);
+        font-family:
+          "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+      }
+
+      /* ===== Second document header ===== */
+      .doc-break {
+        margin-top: 12mm;
+        padding-bottom: 4mm;
+        border-bottom: 2px solid var(--ink);
+      }
+
+      .doc-break .name {
+        font-size: 1.5rem;
+        margin-bottom: 1.5mm;
+      }
+
+      /* ===== Footnote ===== */
+      .footnote {
+        margin-top: 7mm;
+        padding-top: 2.5mm;
+        border-top: 1px solid var(--rule-soft);
+        font-size: 0.77rem;
+        color: var(--ink-faint);
+      }
+
+      /* ===== Print button ===== */
+      .print-btn {
+        position: fixed;
+        top: 18px;
+        right: 18px;
+        z-index: 10;
+        font: inherit;
+        font-size: 0.82rem;
+        padding: 7px 15px;
+        color: #fff;
+        background: var(--ink);
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+      }
+
+      .print-btn:hover,
+      .print-btn:focus-visible {
+        background: var(--accent);
+      }
+
+      .print-btn:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+
+      .hint {
+        max-width: 210mm;
+        margin: 0 auto 24px;
+        font-size: 0.75rem;
+        color: var(--ink-faint);
+        text-align: center;
+      }
+
+      /* ===== Narrow screens ===== */
+      @media screen and (max-width: 640px) {
+        .sheet {
+          padding: 12mm 7mm;
+        }
+
+        .head {
+          flex-direction: column-reverse;
+          align-items: flex-start;
+          gap: 5mm;
+        }
+
+        .row,
+        .stage .row,
+        .skills .row,
+        .cert-grid .row {
+          grid-template-columns: 1fr;
+          gap: 0.8mm 0;
+        }
+
+        .cert-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .cert-grid .row:nth-child(2) {
+          border-top: 1px solid var(--rule-soft);
+        }
+
+        .proj-head {
+          flex-direction: column;
+          gap: 0.5mm;
+        }
+
+        .papers .row {
+          grid-template-columns: 11mm 1fr;
+          gap: 0.4mm 4mm;
+        }
+
+        .papers .p-title {
+          grid-column: 1 / -1;
+        }
+      }
+
+      /* ========================================
+         Print Styles — 반드시 스타일시트 마지막에 둘 것
+         ======================================== */
+      @page {
+        size: A4 portrait;
+        margin: 10mm 15mm;
+      }
+
+      @media print {
+        html {
+          font-size: 11pt;
+        }
+
+        body {
+          background: #fff;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+
+        .sheet {
+          max-width: none;
+          margin: 0;
+          padding: 0;
+          box-shadow: none;
+        }
+
+        .no-print {
+          display: none !important;
+        }
+
+        /* 섹션은 통째로 한 페이지 안에 — 제목만 남고 넘어가지 않게 */
+        .section,
+        .row,
+        .proj,
+        .head,
+        .doc-break {
+          break-inside: avoid;
+          page-break-inside: avoid;
+        }
+
+        .section-title,
+        .proj-head {
+          break-after: avoid;
+          page-break-after: avoid;
+        }
+
+        .section {
+          margin-top: 5.5mm;
+        }
+
+        .head + .lead,
+        .lead {
+          break-after: avoid;
+          page-break-after: avoid;
+        }
+
+        .doc-break {
+          break-before: page;
+          page-break-before: always;
+          margin-top: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <button class="print-btn no-print" onclick="window.print()">
+      PDF로 저장 / 인쇄
+    </button>
+
+    <div class="sheet">
+      <!-- ==================== 이력서 ==================== -->
+      <header class="head">
+        <div class="head-body">
+          <div class="doc-type">이력서</div>
+          <h1 class="name">이용학</h1>
+          <p class="title-line">
+            응용통계학 박사 · AI R&amp;D 과제 기획 · 3차원 계측 모델 개발
+          </p>
+          <div class="contact">
+            <span>feint225@gmail.com</span>
+            <span>010-8295-3294</span>
+          </div>
+        </div>
+        <div class="photo">
+          <img src="../images/yonghaklee.jpg" alt="증명사진" />
+        </div>
+      </header>
+
+      <p class="lead">
+        AI 모델을 직접 개발하면서 <strong>국가 R&amp;D 과제 8건</strong>의 기획
+        · 제안 · 수행에 참여했습니다. 공고를 분석해 과제 방향과 정량 목표를
+        세우고, 제안서를 작성하고, 선정된 과제에서 모델 개발과 성과 보고를
+        맡았습니다.
+      </p>
+
+      <!-- ===== 학력 ===== -->
+      <section class="section">
+        <h2 class="section-title">학력</h2>
+
+        <div class="row">
+          <div class="when mono">2022.03 – 2026.08</div>
+          <div class="what">
+            <div class="what-title">
+              건국대학교 일반대학원 응용통계학과
+              <span class="what-sub">· 박사</span>
+            </div>
+            <div class="what-note">
+              학위논문: 모바일 LiDAR와 딥러닝 통합을 통한 3D 생체 인식 및 자동화
+              정밀 측정 연구
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="when mono">2020.03 – 2022.02</div>
+          <div class="what">
+            <div class="what-title">
+              건국대학교 일반대학원 응용통계학과
+              <span class="what-sub">· 석사</span>
+            </div>
+            <div class="what-note">
+              학위논문: 상품 추천을 위한 시각 이미지와 메타데이터 통합 분석
+              방법론
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="when mono">2010.03 – 2020.02</div>
+          <div class="what">
+            <div class="what-title">
+              건국대학교 응용통계학과 <span class="what-sub">· 학사</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 경력 ===== -->
+      <section class="section">
+        <h2 class="section-title">경력</h2>
+
+        <div class="row">
+          <div class="when mono">2023.03 – 2026.06</div>
+          <div class="what">
+            <div class="what-title">
+              주식회사 머스트리 <span class="what-sub">· 기술팀 사원</span>
+            </div>
+            <div class="what-note">
+              AI 모델 기술개발 · 국가 R&amp;D 과제 기획 및 수행 · 특허 출원 관리
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 연구 실적 ===== -->
+      <section class="section">
+        <h2 class="section-title">
+          연구 실적
+          <span class="section-note">상세 내역은 경력기술서에 기재</span>
+        </h2>
+
+        <div class="row">
+          <div class="when">국가 R&amp;D 과제</div>
+          <div class="what">
+            <div class="what-title">
+              8건 <span class="what-sub">· 기획 · 제안 · 수행 참여</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="when">학술지 논문</div>
+          <div class="what">
+            <div class="what-title">
+              13편 참여
+              <span class="what-sub">· 제1저자 1편, 교신저자 1편</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="when">특허</div>
+          <div class="what">
+            <div class="what-title">
+              2건
+              <span class="what-sub">· 등록 1건 · 출원 1건 (공동발명자)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 자격 ===== -->
+      <section class="section">
+        <h2 class="section-title">자격</h2>
+
+        <div class="cert-grid">
+          <div class="row">
+            <div class="when mono">2026.08</div>
+            <div class="what">
+              <div class="what-title">
+                TOEIC 865 <span class="what-sub">· 한국TOEIC위원회</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="when mono">2025.12</div>
+            <div class="what">
+              <div class="what-title">
+                SQLD <span class="what-sub">· 한국데이터산업진흥원</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="when mono">2025.11</div>
+            <div class="what">
+              <div class="what-title">
+                ADsP <span class="what-sub">· 한국데이터산업진흥원</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="when mono">2019.08</div>
+            <div class="what">
+              <div class="what-title">
+                한국사능력검정시험 1급
+                <span class="what-sub">· 국사편찬위원회</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="when mono">2015.08</div>
+            <div class="what">
+              <div class="what-title">
+                컴퓨터활용능력 1급
+                <span class="what-sub">· 대한상공회의소</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 경력기술서 ==================== -->
+      <header class="head doc-break">
+        <div class="head-body">
+          <div class="doc-type">경력기술서</div>
+          <h2 class="name">이용학</h2>
+          <div class="contact">
+            <span>feint225@gmail.com</span>
+            <span>010-8295-3294</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- ===== 담당 업무 ===== -->
+      <section class="section">
+        <h2 class="section-title">담당 업무</h2>
+
+        <div class="row">
+          <div class="when">주식회사 머스트리</div>
+          <div class="what">
+            <div class="what-title">
+              기술팀 <span class="what-sub">· 2023.03 – 2026.06</span>
+            </div>
+            <ul class="duty-list">
+              <li>국가 R&amp;D 과제 기획 및 제안서 작성</li>
+              <li>선정 과제의 개발 일정 · 산출물 관리와 성과 보고</li>
+              <li>참여기관 · 수요기업과의 요구사항 협의</li>
+              <li>3차원 점군 데이터 기반 치수 측정 알고리즘 연구</li>
+              <li>AI 모델 연구 · 개발과 자동화 · 서비스 연동 구현</li>
+              <li>특허 출원 및 관리</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== R&D 전주기 수행 범위 ===== -->
+      <section class="section stage">
+        <h2 class="section-title">국가 R&amp;D 과제 수행 범위</h2>
+
+        <div class="row">
+          <div class="when">기획</div>
+          <div class="what">
+            공고문과 제안요청서를 분석해 사업 취지에 부합하도록 과제 방향을
+            설정하고, 기술 · 시장 동향과 수요기업의 요구사항을 조사해 개발
+            목표와 정량적 성과지표를 도출했습니다.
+          </div>
+        </div>
+        <div class="row">
+          <div class="when">제안</div>
+          <div class="what">
+            도출한 목표에 맞춰 개발 범위를 단계별 일정과 산출물 단위로
+            구체화하고, 기술 개발 부분을 중심으로 제안서를 작성했습니다.
+          </div>
+        </div>
+        <div class="row">
+          <div class="when">수행</div>
+          <div class="what">
+            선정된 과제에서 데이터 확보부터 모델 개발과 검증까지 담당하고,
+            참여기관 · 수요기업과 협의해 요구사항 변경을 개발 범위와 일정에
+            반영했습니다. 목표 대비 달성도를 정량 지표로 정리해 중간 · 최종
+            보고서 작성에 참여했습니다.
+          </div>
+        </div>
+        <div class="row">
+          <div class="when">성과 확산</div>
+          <div class="what">
+            개발 결과를 학술지 논문으로 정리하고, 일부 기술은 특허 출원 및
+            등록으로 연결했습니다.
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 보유 역량 ===== -->
+      <section class="section skills">
+        <h2 class="section-title">보유 역량</h2>
+
+        <div class="row">
+          <div class="when">과제 기획 · 제안</div>
+          <div class="what">
+            공고문 · 제안요청서 분석, 기술 동향 및 수요 조사, 정량 목표 설계,
+            제안서 작성, 개발 일정 · 산출물 관리
+          </div>
+        </div>
+        <div class="row">
+          <div class="when">문서 · 커뮤니케이션</div>
+          <div class="what">
+            제안서 · 중간 및 최종 보고서 작성, 학술지 논문 작성과 심사 대응,
+            참여기관 · 수요기업 협의, 과제 발표
+          </div>
+        </div>
+        <div class="row">
+          <div class="when">AI · 데이터 기술</div>
+          <div class="what">
+            Python, PyTorch, 검출 · 분할 · 키포인트 모델, 트리 기반 모델, 회귀 ·
+            다변량 분석
+          </div>
+        </div>
+        <div class="row">
+          <div class="when">데이터</div>
+          <div class="what">
+            3차원 포인트 클라우드, 모바일 라이다, 영상 · 시계열 센서 데이터,
+            텍스트 메타데이터
+          </div>
+        </div>
+        <div class="row">
+          <div class="when">어학</div>
+          <div class="what">TOEIC 865 (2026.08)</div>
+        </div>
+      </section>
+
+      <!-- ===== 국가 연구개발 과제 ===== -->
+      <section class="section">
+        <h2 class="section-title">
+          국가 연구개발 과제
+          <span class="section-note">8건 · 2019.12 – 2025.12</span>
+        </h2>
+
+        <div class="row compact">
+          <div class="when mono">2025.05 – 2025.12</div>
+          <div class="what">
+            <div class="what-title">
+              K-뷰티 초개인 맞춤화를 위한 모바일 피부분석 AI 솔루션 개발
+            </div>
+          </div>
+        </div>
+        <div class="row compact">
+          <div class="when mono">2024.11 – 2025.10</div>
+          <div class="what">
+            <div class="what-title">
+              소아·청소년 성장 및 건강 솔루션 모바일 헬스케어 앱을 위한 비만
+              판정 및 자세 교정
+            </div>
+          </div>
+        </div>
+        <div class="row compact">
+          <div class="when mono">2024.10 – 2025.09</div>
+          <div class="what">
+            <div class="what-title">
+              업소용 기자재 중고 거래를 위한 사이즈 및 무게 측정 솔루션 고도화
+            </div>
+          </div>
+        </div>
+        <div class="row compact">
+          <div class="when mono">2023.09 – 2024.07</div>
+          <div class="what">
+            <div class="what-title">
+              온라인 중고 거래 활성화를 위한 옷 치수 자동 측정 솔루션 고도화
+            </div>
+          </div>
+        </div>
+        <div class="row compact">
+          <div class="when mono">2023.03 – 2024.02</div>
+          <div class="what">
+            <div class="what-title">
+              적대적 샘플 공격에 대한 인공지능의 취약점 분석과 대응방안 연구
+            </div>
+          </div>
+        </div>
+        <div class="row compact">
+          <div class="when mono">2021.09 – 2024.02</div>
+          <div class="what">
+            <div class="what-title">
+              3차원 자료를 활용한 영상인식 및 방역로봇 자율주행 연구
+            </div>
+          </div>
+        </div>
+        <div class="row compact">
+          <div class="when mono">2020.12 – 2021.11</div>
+          <div class="what">
+            <div class="what-title">
+              인공지능 기반 비대면 비전 솔루션을 활용한 쓰레기 배출 감시 시스템
+              개발
+            </div>
+          </div>
+        </div>
+        <div class="row compact">
+          <div class="when mono">2019.12 – 2021.01</div>
+          <div class="what">
+            <div class="what-title">
+              딥러닝 및 이미지 프로세싱 기술을 활용한 미세먼지 측정기술 개발
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 프로젝트 수행 내역 ===== -->
+      <section class="section">
+        <h2 class="section-title">프로젝트 수행 내역</h2>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-title">
+              모바일 LiDAR 기반 3차원 계측 및 속성 추정 프레임워크
+            </h3>
+            <span class="proj-when">2023.01 – 2026.06</span>
+          </div>
+          <div class="proj-role">
+            과제 기획 및 제안 · 데이터 수집 및 전처리 · 모델 학습 및 평가 · 논문
+            작성 · 특허 출원
+          </div>
+          <p class="proj-desc">
+            2차원 이미지는 거리 정보가 없어 실제 치수를 재려면 참조물과 통제된
+            촬영 환경이 필요했습니다. 딥러닝으로 검출한 키포인트에 라이다 깊이
+            정보를 매핑해 참조물 없이 치수를 산출하는 파이프라인을 설계하고,
+            2차원 키포인트가 3차원 공간의 경계와 어긋나는 문제는 깊이 맵의
+            경계선을 이용해 보정했습니다. 보정 전 19.2%였던 상대오차가 5%대로
+            낮아졌고, 측정한 길이로부터 무게와 둘레처럼 직접 재기 어려운 값을
+            추정하는 회귀식을 더해 의류 · 농산물 · 인체 등 형태와 크기가 다른
+            대상에 같은 구조를 적용했습니다. 이 기술 축에서 국가 R&amp;D 과제
+            4건, 학술지 논문 3편, 특허 2건이 나왔습니다.
+          </p>
+          <div class="proj-tech">
+            Mobile LiDAR · 3D Point Cloud · Python · PyTorch · HRNet · YOLO
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-title">
+              로봇 센서 데이터 기반 가스배관 변화구간 및 길이 탐지 솔루션
+            </h3>
+            <span class="proj-when">2022.01 – 2023.01</span>
+          </div>
+          <div class="proj-role">
+            데이터 전처리 · 파생변수 생성 · 모델 학습 및 평가 · 모델 고도화 ·
+            패키징
+          </div>
+          <p class="proj-desc">
+            배관 내부를 주행하는 로봇의 센서 데이터만으로 접합부와 만곡부를
+            찾아야 했는데, 처음 적용한 다층 신경망은 입력 크기가 고정되어야 하는
+            제약 탓에 성능이 나오지 않았습니다. 입력 길이 제약이 없는 트리 기반
+            모델로 바꾸고, 원본 신호를 그대로 넣는 대신 분산, 최대-최소 차이, 행
+            간 변화량 등의 파생 변수를 설계해 가변 길이 구간을 고정 길이 벡터로
+            요약했습니다. 접합부를 먼저 탐지한 뒤 그 사이 구간을 만곡부 후보로
+            다시 정의하는 단계적 접근으로 문제를 나누고, 학습 · 추론 절차는
+            패키징해 반복 실행이 가능한 형태로 정리했습니다.
+          </p>
+          <div class="proj-tech">
+            Python · Random Forest · LightGBM · 센서 시계열 데이터
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-title">
+              시각 이미지와 메타데이터를 통합한 상품 추천 방법론
+            </h3>
+            <span class="proj-when">2021.01 – 2022.01</span>
+          </div>
+          <div class="proj-role">
+            데이터 수집 및 전처리 · 모델 학습 및 평가 · 모델 고도화 · 논문 작성
+          </div>
+          <p class="proj-desc">
+            이미지와 텍스트 중 한쪽만으로는 상품 간 관계를 충분히 예측하기
+            어려웠습니다. 두 특징을 결합한 통합 모델을 구성하되, 모바일 연산
+            제약을 고려해 경량 백본으로 이미지 특징을 뽑고 문장 임베딩으로
+            메타데이터를 벡터화했습니다. 두 상품 벡터를 이어 붙이는 데 그치지
+            않고 차이의 절댓값을 함께 입력해, 이미지 단독 70.9% · 텍스트 단독
+            96.6%였던 정확도를 결합 시 98.2%까지 높였습니다. 결과는 제1저자
+            논문으로 게재했으며 석사 학위논문의 토대가 되었습니다.
+          </p>
+          <div class="proj-tech">
+            Python · PyTorch · MobileNetV3 · Sentence-BERT
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-head">
+            <h3 class="proj-title">영상 기반 미세먼지 농도 추정 솔루션</h3>
+            <span class="proj-when">2020.01 – 2021.01</span>
+          </div>
+          <div class="proj-role">
+            데이터 수집 및 전처리 · 모델 학습 및 평가 · 모델 고도화
+          </div>
+          <p class="proj-desc">
+            국가 측정망은 정확하지만 설치와 유지에 비용이 크고 공간 제약으로
+            관측 사각지대가 생겼습니다. 단일 이미지를 분석하던 기존 방식 대신
+            연속된 영상 프레임을 사용해 농도의 흐름과 변동성을 포착하고, 프레임
+            간 광도 변화를 시간적 사전정보로 정의해 원본과 함께 입력했습니다.
+            라즈베리 파이 기반으로 구현해 저비용 장비에서 실시간 동작하도록
+            연산량을 조정했으며, 실내와 실외 환경에서 각각 검증해 실외
+            상관계수를 0.72에서 0.82로 개선했습니다.
+          </p>
+          <div class="proj-tech">Raspberry Pi · Python · OpenCV</div>
+        </article>
+      </section>
+
+      <!-- ===== 특허 ===== -->
+      <section class="section">
+        <h2 class="section-title">특허</h2>
+
+        <div class="row">
+          <div class="when mono">등록 2025.07.16</div>
+          <div class="what">
+            <div class="what-title">
+              영상 데이터 융합을 통한 얼굴의 부위별 주름 검출 장치 및 방법
+            </div>
+            <div class="what-note">
+              출원 10-2024-0174052 (2024.11.28) · 공동발명자 기술설명서 작성,
+              변리사 협의, 중간사건 대응까지 관리
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="when mono">출원 2024.06.14</div>
+          <div class="what">
+            <div class="what-title">
+              2D 및 3D 데이터 융합을 통한 신체 둘레 측정 자동화 방법 및 장치
+            </div>
+            <div class="what-note">출원 10-2024-0077839 · 공동발명자</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 학술지 논문 ===== -->
+      <section class="section papers">
+        <h2 class="section-title">
+          학술지 논문
+          <span class="section-note">13편 · 2020 – 2026</span>
+        </h2>
+
+        <div class="row">
+          <div class="p-year">2026</div>
+          <div class="p-venue">IEEE Access</div>
+          <div class="p-title">
+            Topology-Constrained NeuroB-Rep: Contact-Aware CAD Reconstruction
+            From 3D Point Clouds
+          </div>
+        </div>
+        <div class="row">
+          <div class="p-year">2025</div>
+          <div class="p-venue">Quant. Bio-Science</div>
+          <div class="p-title">
+            A Two-Stage Diffusion Pipeline for Consistent Front-Back Clothing
+            Generation
+            <span class="p-role">· 교신저자</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="p-year">2025</div>
+          <div class="p-venue">Applied Sciences</div>
+          <div class="p-title">
+            A Mobile LiDAR-Based Deep Learning Approach for Real-Time 3D Body
+            Measurement
+          </div>
+        </div>
+        <div class="row">
+          <div class="p-year">2025</div>
+          <div class="p-venue">정보보호학회논문지</div>
+          <div class="p-title">
+            SoulBound Token Recovery Mechanism and the Application of a
+            Customer-Centric Guardian System
+          </div>
+        </div>
+        <div class="row">
+          <div class="p-year">2024</div>
+          <div class="p-venue">IEEE Access</div>
+          <div class="p-title">
+            Automated Technology for Strawberry Size Measurement and Weight
+            Prediction Using AI
+          </div>
+        </div>
+        <div class="row">
+          <div class="p-year">2024</div>
+          <div class="p-venue">정보보호학회논문지</div>
+          <div class="p-title">
+            Implementation of SoulBound Token Using Economical and Efficient
+            Decentralized File Storage Methods
+          </div>
+        </div>
+        <div class="row">
+          <div class="p-year">2023</div>
+          <div class="p-venue">Applied Sciences</div>
+          <div class="p-title">
+            A Multi-View Integrated Ensemble for the Background Discrimination
+            of Semi-Supervised Semantic Segmentation
+          </div>
+        </div>
+        <div class="row">
+          <div class="p-year">2023</div>
+          <div class="p-venue">Quant. Bio-Science</div>
+          <div class="p-title">
+            Dental Image Data Generation for Instance Segmentation using
+            Generative Adversarial Networks
+          </div>
+        </div>
+        <div class="row">
+          <div class="p-year">2022</div>
+          <div class="p-venue">Quant. Bio-Science</div>
+          <div class="p-title">
+            Integrated Analytic Methodology Using Visual Image and Meta-Data for
+            Product Recommendation
+            <span class="p-role">· 제1저자</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="p-year">2022</div>
+          <div class="p-venue">Applied Sciences</div>
+          <div class="p-title">
+            Automatic Measurements of Garment Sizes Using Computer Vision Deep
+            Learning Models and Point Cloud Data
+          </div>
+        </div>
+        <div class="row">
+          <div class="p-year">2022</div>
+          <div class="p-venue">Quant. Bio-Science</div>
+          <div class="p-title">
+            An Investment Model Based on a Head-And-Shoulder Pattern with
+            Multiple Moving Average Technical Indicators for Future Markets
+          </div>
+        </div>
+        <div class="row">
+          <div class="p-year">2020</div>
+          <div class="p-venue">Journal of Sensors</div>
+          <div class="p-title">
+            Reinforcement Learning Guided by Double Replay Memory
+          </div>
+        </div>
+        <div class="row">
+          <div class="p-year">2020</div>
+          <div class="p-venue">Journal of Sensors</div>
+          <div class="p-title">
+            Estimation of Particulate Levels Using Deep Dehazing Network and
+            Temporal Prior
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <p class="hint no-print">
+      우측 상단 버튼 또는 Ctrl+P(⌘+P) → 대상을 &ldquo;PDF로 저장&rdquo;으로
+      지정하세요. 여백은 &ldquo;기본&rdquo;으로 두시면 됩니다.
+    </p>
+  </body>
+</html>
